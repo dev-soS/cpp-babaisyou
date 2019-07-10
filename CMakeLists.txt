@@ -3,4 +3,6 @@ project(cpp_babaisyou)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(cpp_babaisyou src/main.cpp)
+file(GLOB SOURCES "src/*.cpp")
+
+add_executable(cpp_babaisyou ${SOURCES})
