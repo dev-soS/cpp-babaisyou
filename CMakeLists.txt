@@ -6,3 +6,5 @@ set(CMAKE_CXX_STANDARD 17)
 file(GLOB SOURCES "src/*.cpp")
 
 add_executable(cpp_babaisyou ${SOURCES})
+
+add_subdirectory(${CMAKE_SOURCE_DIR}/unittest)
