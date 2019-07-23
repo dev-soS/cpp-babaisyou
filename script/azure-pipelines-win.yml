@@ -10,6 +10,8 @@ jobs:
       cmakeArgs: ..\
     displayName: CMake project
 
+  - script: dir .\build
+
   - task: MSBuild@1
     inputs: 
       solution: .\build\cpp_babaisyou.sln
