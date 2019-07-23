@@ -10,12 +10,15 @@ jobs:
       cmakeArgs: ..\
     displayName: CMake project
 
-  - script: dir .\build
-
   - task: MSBuild@1
     inputs: 
       solution: .\build\cpp_babaisyou.sln
     displayName: MSBuild project
+  
+  - task: MSBuild@1
+    inputs:
+      solution: .\build\unittest\unittest.sln
+    displayName: MSBuild unittest
 # UnitTest
-  - script: .\build\Debug\unittest.exe
+  - script: .\build\unittest\Debug\unittest.exe
     displayName: Start unittest
