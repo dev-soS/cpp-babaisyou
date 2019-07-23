@@ -1,0 +1,12 @@
+FROM ubuntu:18.04
+
+RUN apt-get update -yq && apt-get install -yq build-essential cmake
+RUN echo `g++ --version`
+
+ADD . /app
+
+# Run UnitTest
+WORKDIR /app/build
+RUN cmake .. && \
+    make -j `nproc` && \
+    ./unittest/unittest
