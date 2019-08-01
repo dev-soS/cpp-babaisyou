@@ -7,3 +7,4 @@ file(GLOB SOURCES "src/*.cpp")
 
 add_executable(unittest ${SOURCES})
 include_directories(${CMAKE_SOURCE_DIR}/external)
+include_directories(${CMAKE_SOURCE_DIR}/src)
