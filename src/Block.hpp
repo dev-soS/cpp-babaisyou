@@ -1,8 +1,10 @@
 #ifndef BLOCK_HPP
 #define BLOCK_HPP
 
-#include "Enums.hpp"
 #include <set>
+#include <string>
+
+#include "Enums.hpp"
 
 class Block
 {
@@ -15,6 +17,8 @@ public :
 	void addProperty(std::set<Property> property);
 	void removeProperty(Property property);
 	void removeProperty(const std::set<Property>& property);
+
+	bool containProperty(Property property) const;
 
 	bool move(MoveType move_type);
 };
