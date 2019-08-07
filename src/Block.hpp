@@ -9,11 +9,11 @@ class Block
 {
 protected :
 	std::set<Property> properties;
-	std::string block_name;
+	BlockId block_id;
 	char block_visual[3][3];
 
 public :
-	Block(std::string name, std::set<Property> property, char block_visual[10]);
+	Block(BlockId block_id, std::set<Property> property, char block_visual[10]);
 
 	void addProperty(Property property);
 	void addProperty(std::set<Property> property);
@@ -31,7 +31,7 @@ private :
 	Entity* this_entity;
 
 public :
-	Text(std::string name, std::set<Property> property, char block_visual[10], Entity* this_entity = nullptr);
+	Text(BlockId block_id, std::set<Property> property, char block_visual[10], Entity* this_entity = nullptr);
 
 	static Text baba;
 	static Text is;
@@ -49,7 +49,7 @@ class Entity : public Block
 private :
 
 public :
-	Entity(std::string name, std::set<Property> property, char block_visual[10]);
+	Entity(BlockId block_id, std::set<Property> property, char block_visual[10]);
 
 	static Entity baba;
 	static Entity flag;

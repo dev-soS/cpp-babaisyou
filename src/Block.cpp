@@ -1,19 +1,19 @@
 #include "Block.hpp"
 
-Text Text::baba("BABA", { Property::PUSH }, "B A   B A", &Entity::baba);
-Text Text::is("IS", { Property::PUSH }, "   I S   ");
-Text Text::you("YOU", { Property::PUSH }, "   YOU   ");
-Text Text::flag("FLAG", { Property::PUSH }, "F L   A G", &Entity::flag);
-Text Text::win("WIN", { Property::PUSH }, "   WIN   ");
-Text Text::push("PUSH", { Property::PUSH }, "P U   S H");
-Text Text::stop("STOP", { Property::PUSH }, "S T   O P");
+Text Text::baba(BlockId::BABATEXT, { Property::PUSH }, "B A   B A", &Entity::baba);
+Text Text::is(BlockId::ISTEXT, { Property::PUSH }, "   I S   ");
+Text Text::you(BlockId::YOUTEXT, { Property::PUSH }, "   YOU   ");
+Text Text::flag(BlockId::FLAGTEXT, { Property::PUSH }, "F L   A G", &Entity::flag);
+Text Text::win(BlockId::WINTEXT, { Property::PUSH }, "   WIN   ");
+Text Text::push(BlockId::PUSHTEXT, { Property::PUSH }, "P U   S H");
+Text Text::stop(BlockId::STOPTEXT, { Property::PUSH }, "S T   O P");
 
-Entity Entity::baba("BABA", {}, "/  OOOO O");
-Entity Entity::flag("FLAG", {}, " |> | ===");
+Entity Entity::baba(BlockId::BABAENTITY, {}, "/  OOOO O");
+Entity Entity::flag(BlockId::FLAGENTITY, {}, " |> | ===");
 
 // CLASS BLOCK PART =======================================
 
-Block::Block(std::string name, std::set<Property> property, char block_visual[10]) : block_name(name), properties(property)
+Block::Block(BlockId block_id, std::set<Property> property, char block_visual[10]) : block_id(block_id), properties(property)
 {
 	for (int i = 0, k = 0; i < 3; ++i)
 	{
@@ -61,7 +61,7 @@ bool Block::containProperty(Property property) const
 	
 // CLASS TEXT PART ========================================
 
-Text::Text(std::string name, std::set<Property> property, char block_visual[10], Entity* this_entity) : Block(name, property, block_visual), this_entity(this_entity)
+Text::Text(BlockId block_id, std::set<Property> property, char block_visual[10], Entity* this_entity) : Block(block_id, property, block_visual), this_entity(this_entity)
 {
 
 }
@@ -73,7 +73,7 @@ Entity* Text::getThisEntity()
 
 // CLASS ENTITY PART ======================================
 
-Entity::Entity(std::string name, std::set<Property> property, char block_visual[10]) : Block(name, property, block_visual)
+Entity::Entity(BlockId block_id, std::set<Property> property, char block_visual[10]) : Block(block_id, property, block_visual)
 {
 
 }

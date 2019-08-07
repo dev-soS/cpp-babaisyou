@@ -17,4 +17,16 @@ enum class MoveType
 	RIGHT
 };
 
+enum class BlockId
+{
+	BABATEXT,
+	FLAGTEXT,
+	ISTEXT,
+	YOUTEXT,
+	WINTEXT,
+	PUSHTEXT,
+	STOPTEXT,
+	BABAENTITY,
+	FLAGENTITY,
+};
 #endif
