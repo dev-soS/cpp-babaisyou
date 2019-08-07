@@ -1,0 +1,17 @@
+jobs:
+- job: ${{ parameters.name }}
+  pool:
+    vmImage: ${{ parameters.vmImage }}
+  steps:
+# Make
+  - task: CMake@1
+    inputs:
+      workingDirectory: ./build
+      cmakeArgs: ../
+    displayName: CMake project
+
+  - script: cd ./build && make;
+    displayName: GNU Make project
+# UnitTest
+  - script: ./build/unittest/unittest
+    displayName: Run unittest
