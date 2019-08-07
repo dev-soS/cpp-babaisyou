@@ -1,20 +1,27 @@
 #include "Block.hpp"
 
-Text Text::baba("BABA", { Property::PUSH });
-Text Text::is("IS", { Property::PUSH });
-Text Text::you("YOU", { Property::PUSH });
-Text Text::flag("FLAG", { Property::PUSH });
-Text Text::win("WIN", { Property::PUSH });
-Text Text::push("PUSH", { Property::PUSH });
-Text Text::stop("STOP", { Property::PUSH });
+Text Text::baba("BABA", { Property::PUSH }, "B A   B A", &Entity::baba);
+Text Text::is("IS", { Property::PUSH }, "   I S   ");
+Text Text::you("YOU", { Property::PUSH }, "   YOU   ");
+Text Text::flag("FLAG", { Property::PUSH }, "F L   A G", &Entity::flag);
+Text Text::win("WIN", { Property::PUSH }, "   WIN   ");
+Text Text::push("PUSH", { Property::PUSH }, "P U   S H");
+Text Text::stop("STOP", { Property::PUSH }, "S T   O P");
 
-Entity Entity::baba("BABA", {});
-Entity Entity::flag("FLAG", {});
+Entity Entity::baba("BABA", {}, "/  OOOO O");
+Entity Entity::flag("FLAG", {}, " |> | ===");
 
 // CLASS BLOCK PART =======================================
 
-Block::Block(std::string name, std::set<Property> property)  : block_name(name), properties(property){
-
+Block::Block(std::string name, std::set<Property> property, char block_visual[10]) : block_name(name), properties(property)
+{
+	for (int i = 0, k = 0; i < 3; ++i)
+	{
+		for (int j = 0; j < 3; ++j, ++k )
+		{
+			this->block_visual[i][j] = block_visual[k];
+		}
+	}
 }
 
 void Block::addProperty(Property property)
@@ -40,31 +47,33 @@ void Block::removeProperty(const std::set<Property>& property)
 	}
 }
 
-bool Block::move(MoveType move_type)
+bool Block::containProperty(Property property) const
 {
-	switch ( move_type )
+	if ( properties.find(property) == properties.end() )
 	{
-	case MoveType::UP :
-
-	case MoveType::DOWN :
-
-	case MoveType::LEFT :
-
-	case MoveType::RIGHT :
-
+		return false;
+	}
+	else
+	{
+		return true;
 	}
 }
-
+	
 // CLASS TEXT PART ========================================
 
-Text::Text(std::string name, std::set<Property> property) : Block(name, property)
+Text::Text(std::string name, std::set<Property> property, char block_visual[10], Entity* this_entity) : Block(name, property, block_visual), this_entity(this_entity)
 {
 
+}
+
+Entity* Text::getThisEntity()
+{
+	return this_entity;
 }
 
 // CLASS ENTITY PART ======================================
 
-Entity::Entity(std::string name, std::set<Property> property) : Block(name, property)
+Entity::Entity(std::string name, std::set<Property> property, char block_visual[10]) : Block(name, property, block_visual)
 {
 
 }
