@@ -2,6 +2,7 @@
 #define ALGORITHM_HPP
 
 #include <map>
+#include <optional>
 #include <vector>
 
 #include "Block.hpp"
@@ -65,6 +66,7 @@ bool move(Map<Width, Height>& map, std::tuple<size_t, size_t> pos, MoveType dire
     if (possible)
     {
         // TODO: Replace map element type from std::unique_ptr<Block> to std::vector<std::unique_ptr<Block>>
+        // TODO: Move specified block (ex. float)
         move(map, std::make_tuple(new_x, new_y), direction);
         map[new_y][new_x] = std::move(map[y][x]);
         return true;
@@ -72,9 +74,54 @@ bool move(Map<Width, Height>& map, std::tuple<size_t, size_t> pos, MoveType dire
     return false;
 }
 
-void update_blocks(const std::vector<Text*>& blocks)
+void update_blocks(const std::vector<Block*>& blocks)
 {
-    
+    if (blocks.size() % 2 == 0) {
+        return;
+    }
+
+    auto group = [&](size_t idx) {
+        idx += 1;
+        std::vector<Block*> grp;
+        while (idx < blocks.size()) {
+            grp.push_back(blocks[idx - 1]);
+            if (blocks[idx]->getName() != Name::AND) {
+                break;
+            }
+            idx += 2;
+        }
+        return std::make_tuple(grp, idx);
+    };
+
+    auto[src, idx] = group(0);
+    auto[dst, idx_] = group(idx + 1);
+
+    auto add_prop = [&](Property prop) {
+        for (Block* block : src) {
+            block->addProperty(prop);
+        }
+    };
+
+    std::optional<Property> prop = std::nullopt;
+    switch (blocks[idx + 1]->getName()) {
+    case Name::YOU:
+        prop = Property::YOU;
+        break;
+    default:
+        break;
+    }
+
+    if (!prop.has_value()) {
+        return;
+    }
+
+    switch (blocks[idx]->getName()) {
+    case Name::IS:
+        blocks[0]->addProperty(Property::YOU);
+        break;
+    default:
+        break;
+    }
 }
 }
 
