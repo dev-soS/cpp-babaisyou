@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 
+#include "Block.hpp"
 #include "Enums.hpp"
 #include "Map.hpp"
 
@@ -51,7 +52,7 @@ std::tuple<bool, size_t, size_t> movable(const Map<Width, Height>& map,
         return std::make_tuple(false, 0, 0);
     }
 
-    std::unique_ptr<Block>& block = map[new_y][new_x];
+    const std::unique_ptr<Block>& block = map[new_y][new_x];
     bool possible = block == nullptr || !block->containProperty(Property::STOP);
     return std::make_tuple(possible, new_x, new_y);
 }
@@ -71,15 +72,9 @@ bool move(Map<Width, Height>& map, std::tuple<size_t, size_t> pos, MoveType dire
     return false;
 }
 
-void update_blocks(std::vector<Block*> blocks)
+void update_blocks(const std::vector<Text*>& blocks)
 {
-
-}
-
-template <size_t Width, size_t Height>
-void update(Map<Width, Height>& map)
-{
-
+    
 }
 }
 
