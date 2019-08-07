@@ -38,7 +38,7 @@ std::tuple<bool, size_t, size_t> movable(const Map<Width, Height>& map,
                                          MoveType direction)
 {
     auto[x, y] = pos;
-    std::unique_ptr<Block>& current = map[y][x];
+    const std::unique_ptr<Block>& current = map[y][x];
     // TODO: Add property not only push, but also move etc.
     if (!current->containProperty(Property::PUSH))
     {
@@ -63,8 +63,9 @@ bool move(Map<Width, Height>& map, std::tuple<size_t, size_t> pos, MoveType dire
     auto[possible, new_x, new_y] = movable(map, pos, direction);
     if (possible)
     {
+        // TODO: Replace map element type from std::unique_ptr<Block> to std::vector<std::unique_ptr<Block>>
         move(map, std::make_tuple(new_x, new_y), direction);
-        map[new_y][new_x] = std::move(map[x, y]);
+        map[new_y][new_x] = std::move(map[y][x]);
         return true;
     }
     return false;
@@ -72,7 +73,7 @@ bool move(Map<Width, Height>& map, std::tuple<size_t, size_t> pos, MoveType dire
 
 void update_blocks(std::vector<Block*> blocks)
 {
-    
+
 }
 
 template <size_t Width, size_t Height>
