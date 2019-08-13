@@ -13,7 +13,7 @@ protected :
 	char block_visual[3][3];
 
 public :
-	Block(BlockId block_id, std::set<Property> property, char block_visual[10]);
+	Block(BlockId block_id, std::set<Property> property, const char* block_visual);
 
 	void addProperty(Property property);
 	void addProperty(std::set<Property> property);
@@ -26,13 +26,24 @@ public :
 	BlockId getBlockID() const;
 };
 
+class Entity : public Block
+{
+private :
+
+public :
+	Entity(BlockId block_id, std::set<Property> property, const char* block_visual);
+
+	static Entity baba;
+	static Entity flag;
+};
+
 class Text : public Block
 {
 private :
 	Entity* this_entity;
 
 public :
-	Text(BlockId block_id, std::set<Property> property, char block_visual[10], Entity* this_entity = nullptr);
+	Text(BlockId block_id, std::set<Property> property, const char* block_visual, Entity* this_entity = nullptr);
 
 	static Text baba;
 	static Text is;
@@ -43,17 +54,6 @@ public :
 	static Text stop;
 
 	Entity* getThisEntity();
-};
-
-class Entity : public Block
-{
-private :
-
-public :
-	Entity(BlockId block_id, std::set<Property> property, char block_visual[10]);
-
-	static Entity baba;
-	static Entity flag;
 };
 
 #endif

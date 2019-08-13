@@ -13,7 +13,7 @@ Entity Entity::flag(BlockId::FLAGENTITY, {}, " |> | ===");
 
 // CLASS BLOCK PART =======================================
 
-Block::Block(BlockId block_id, std::set<Property> property, char block_visual[10]) : block_id(block_id), properties(property)
+Block::Block(BlockId block_id, std::set<Property> property, const char* block_visual) : block_id(block_id), properties(property)
 {
 	for (int i = 0, k = 0; i < 3; ++i)
 	{
@@ -66,7 +66,7 @@ BlockId Block::getBlockID() const
 	
 // CLASS TEXT PART ========================================
 
-Text::Text(BlockId block_id, std::set<Property> property, char block_visual[10], Entity* this_entity) : Block(block_id, property, block_visual), this_entity(this_entity)
+Text::Text(BlockId block_id, std::set<Property> property, const char* block_visual, Entity* this_entity) : Block(block_id, property, block_visual), this_entity(this_entity)
 {
 
 }
@@ -78,7 +78,7 @@ Entity* Text::getThisEntity()
 
 // CLASS ENTITY PART ======================================
 
-Entity::Entity(BlockId block_id, std::set<Property> property, char block_visual[10]) : Block(block_id, property, block_visual)
+Entity::Entity(BlockId block_id, std::set<Property> property, const char* block_visual) : Block(block_id, property, block_visual)
 {
 
 }
