@@ -3,15 +3,18 @@
 
 #include <memory>
 
-class Block;
+class Block {};
 
 template <size_t Width, size_t Height>
 class Map
 {
 public:
-    Map() {
-        for (size_t i = 0; i < Height; ++i) {
-            for (size_t j = 0; j < Width; ++j) {
+    Map()
+    {
+        for (size_t i = 0; i < Height; ++i)
+        {
+            for (size_t j = 0; j < Width; ++j)
+            {
                 map[i][j] = nullptr;
             }
         }
@@ -19,36 +22,46 @@ public:
 
     ~Map() = default;
 
-    Map(Map&& other) {
-        for(size_t i = 0; i < Height; ++i){
-            for(size_t j = 0; j < Width; ++j){
+    Map(Map&& other)
+    {
+        for(size_t i = 0; i < Height; ++i)
+        {
+            for(size_t j = 0; j < Width; ++j)
+            {
                 map[i][j] = std::move(other[i][j]);
             }
         }
     }
 
-    Map& operator=(Map&& other) {
-        for(size_t i = 0; i < Height; ++i){
-            for(size_t j = 0; j < Width; ++j){
+    Map& operator=(Map&& other)
+    {
+        for(size_t i = 0; i < Height; ++i)
+        {
+            for(size_t j = 0; j < Width; ++j)
+            {
                 map[i][j] = std::move(other[i][j]);
             }
         }
         return *this;
     }
 
-    std::unique_ptr<Block>* operator[](size_t idx) {
+    std::unique_ptr<Block>* operator[](size_t idx)
+    {
         return map[idx];
     }
 
-    const std::unique_ptr<Block>* operator[](size_t idx) const {
+    const std::unique_ptr<Block>* operator[](size_t idx) const
+    {
         return map[idx];
     }
 
-    size_t getWidth() const {
+    size_t getWidth() const
+    {
         return Width;
     }
 
-    size_t getHeight() const {
+    size_t getHeight() const 
+    {
         return Height;
     }
 
