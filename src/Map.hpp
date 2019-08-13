@@ -1,9 +1,9 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
-#include <memory>
+#include "Block.hpp"
 
-class Block;
+#include <memory>
 
 template <size_t Width, size_t Height>
 class Map
