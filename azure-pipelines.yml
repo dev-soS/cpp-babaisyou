@@ -1,8 +1,8 @@
 jobs:
-- template: script/azure-pipelines-mac.yml
-  parameters:
-    name: macOS
-    vmImage: macOS-10.14
+# - template: script/azure-pipelines-mac.yml
+#   parameters:
+#     name: macOS
+#     vmImage: macOS-10.14
 
 - template: script/azure-pipelines-unix.yml
   parameters:
