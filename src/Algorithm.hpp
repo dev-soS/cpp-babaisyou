@@ -80,48 +80,48 @@ void update_blocks(const std::vector<Block*>& blocks)
         return;
     }
 
-    auto group = [&](size_t idx) {
-        idx += 1;
-        std::vector<Block*> grp;
-        while (idx < blocks.size()) {
-            grp.push_back(blocks[idx - 1]);
-            if (blocks[idx]->getName() != Name::AND) {
-                break;
-            }
-            idx += 2;
-        }
-        return std::make_tuple(grp, idx);
-    };
+    // auto group = [&](size_t idx) {
+    //     idx += 1;
+    //     std::vector<Block*> grp;
+    //     while (idx < blocks.size()) {
+    //         grp.push_back(blocks[idx - 1]);
+    //         if (blocks[idx]->getBlockID() != BlockId::ANDTEXT) {
+    //             break;
+    //         }
+    //         idx += 2;
+    //     }
+    //     return std::make_tuple(grp, idx);
+    // };
 
-    auto[src, idx] = group(0);
-    auto[dst, idx_] = group(idx + 1);
+    // auto[src, idx] = group(0);
+    // auto[dst, end] = group(idx + 1);
 
-    auto add_prop = [&](Property prop) {
-        for (Block* block : src) {
-            block->addProperty(prop);
-        }
-    };
+    // auto add_prop = [&](Property prop) {
+    //     for (Block* block : src) {
+    //         block->addProperty(prop);
+    //     }
+    // };
 
-    std::optional<Property> prop = std::nullopt;
-    switch (blocks[idx + 1]->getName()) {
-    case Name::YOU:
-        prop = Property::YOU;
-        break;
-    default:
-        break;
-    }
+    // std::optional<Property> prop = std::nullopt;
+    // switch (blocks[idx + 1]->getBlockID()) {
+    // case BlockId::YOUTEXT:
+    //     prop = Property::YOU;
+    //     break;
+    // default:
+    //     break;
+    // }
 
-    if (!prop.has_value()) {
-        return;
-    }
+    // if (!prop.has_value()) {
+    //     return;
+    // }
 
-    switch (blocks[idx]->getName()) {
-    case Name::IS:
-        blocks[0]->addProperty(Property::YOU);
-        break;
-    default:
-        break;
-    }
+    // switch (blocks[idx]->getBlockID()) {
+    // case BlockId::ISTEXT:
+    //     blocks[0]->addProperty(Property::YOU);
+    //     break;
+    // default:
+    //     break;
+    // }
 }
 }
 
