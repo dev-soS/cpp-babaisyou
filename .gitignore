@@ -3,3 +3,4 @@ build
 
 # editor
 .vs
+.vscode
