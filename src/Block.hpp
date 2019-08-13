@@ -23,7 +23,7 @@ public :
 	void removeProperty(const std::set<Property>& property);
 
 	bool containProperty(Property property) const;
-
+	BlockId getBlockId();
 };
 
 class Entity : public Block

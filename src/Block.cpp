@@ -58,6 +58,11 @@ bool Block::containProperty(Property property) const
 		return true;
 	}
 }
+
+BlockId Block::getBlockId()
+{
+	return block_id;
+}
 	
 // CLASS TEXT PART ========================================
 
