@@ -50,7 +50,7 @@ TEST_CASE("Block::removeProperty", "[Block]")
 
 TEST_CASE("Block::Entity", "[Block]")
 {
-	Entity::Entity(BlockId::BABAENTITY, { Property::PUSH , Property::YOU}, "         ");
+	Entity entity(BlockId::BABAENTITY, { Property::PUSH , Property::YOU}, "         ");
 	REQUIRE(true);
 }
 
