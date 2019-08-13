@@ -19,32 +19,20 @@ public:
 
     ~Map() = default;
 
-    Map(const Map& other) {
-        for(size_t i = 0; i < Height; ++i){
-            for(size_t j = 0; j < Width; ++j){
-                map[i][j] = other[i][j];
-            }
-        }
-    }
-
     Map(Map&& other) {
         for(size_t i = 0; i < Height; ++i){
             for(size_t j = 0; j < Width; ++j){
-                map[i][j] = other[i][j];
-                other[i][j] = nullptr;
+                map[i][j] = std::move(other[i][j]);
             }
         }
-
-
-    }
-
-    Map& operator=(const Map& other) {
-        map = other.map
-        return *this;
     }
 
     Map& operator=(Map&& other) {
-        map = other.map
+        for(size_t i = 0; i < Height; ++i){
+            for(size_t j = 0; j < Width; ++j){
+                map[i][j] = std::move(other[i][j]);
+            }
+        }
         return *this;
     }
 
