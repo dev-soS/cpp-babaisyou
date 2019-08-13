@@ -2,8 +2,9 @@
 #define MAP_HPP
 
 #include <memory>
+#include <vector>
 
-class Block {};
+#include "Block.hpp"
 
 template <size_t Width, size_t Height>
 class Map
