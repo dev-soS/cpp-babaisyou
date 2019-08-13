@@ -58,5 +58,5 @@ TEST_CASE("Block::Text", "[Block]")
 {
 	Entity entity(BlockId::BABAENTITY, { Property::PUSH , Property::YOU }, "         ");
 	Text text(BlockId::BABATEXT, { Property::PUSH }, "123456789", &entity);
-	REQUIRE(text.getThisEntity == &entity);
+	REQUIRE(text.getThisEntity() == &entity);
 }
