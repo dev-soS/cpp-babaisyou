@@ -14,7 +14,8 @@ enum class MoveType
 	UP,
 	DOWN,
 	LEFT,
-	RIGHT
+	RIGHT,
+	NONE
 };
 
 enum class BlockId
