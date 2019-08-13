@@ -2,9 +2,4 @@
 build
 
 # editor
-<<<<<<< HEAD
-.vs
 .vscode
-=======
-.vscode
->>>>>>> 981a3b8ea539f1083862348fde10eb39f203b45c
