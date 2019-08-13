@@ -9,42 +9,50 @@ template <size_t Width, size_t Height>
 class Map
 {
 public:
-    Map() : width(Width), height(Height) {
-        for (size_t i = 0; i < height; ++i) {
-            for (size_t j = 0; j < width; ++j) {
+    Map() {
+        for (size_t i = 0; i < Height; ++i) {
+            for (size_t j = 0; j < Width; ++j) {
                 map[i][j] = nullptr;
             }
         }
     }
 
-    ~Map();
+    ~Map() = default;
 
-    Map(const Map& other);
-    Map(Map&& other);
+    Map(Map&& other) {
+        for(size_t i = 0; i < Height; ++i){
+            for(size_t j = 0; j < Width; ++j){
+                map[i][j] = std::move(other[i][j]);
+            }
+        }
+    }
 
-    Map& operator=(const Map& other);
-    Map& operator=(Map&& other);
+    Map& operator=(Map&& other) {
+        for(size_t i = 0; i < Height; ++i){
+            for(size_t j = 0; j < Width; ++j){
+                map[i][j] = std::move(other[i][j]);
+            }
+        }
+        return *this;
+    }
 
     std::unique_ptr<Block>* operator[](size_t idx) {
         return map[idx];
     }
 
     const std::unique_ptr<Block>* operator[](size_t idx) const {
-        
+        return map[idx];
     }
 
     size_t getWidth() const {
-
+        return Width;
     }
 
     size_t getHeight() const {
-
+        return Height;
     }
 
 private:
-    size_t width;
-    size_t height;
-
     std::unique_ptr<Block> map[Height][Width];
 };
 
