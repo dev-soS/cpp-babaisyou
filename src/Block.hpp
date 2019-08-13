@@ -15,6 +15,8 @@ protected :
 public :
 	Block(BlockId block_id, std::set<Property> property, const char* block_visual);
 
+	virtual ~Block() = default;
+
 	void addProperty(Property property);
 	void addProperty(std::set<Property> property);
 
