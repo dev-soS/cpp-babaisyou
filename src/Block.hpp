@@ -23,6 +23,7 @@ public :
 
 	bool containProperty(Property property) const;
 
+	BlockId getBlockID() const;
 };
 
 class Text : public Block
