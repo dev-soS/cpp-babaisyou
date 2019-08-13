@@ -1,34 +1,37 @@
 #ifndef BLOCK_HPP
 #define BLOCK_HPP
 
-#include <set>
-#include <string>
-
 #include "Enums.hpp"
+
+#include <set>
 
 class Block
 {
 protected :
 	std::set<Property> properties;
-	std::string block_name;
+	BlockId block_id;
+	char block_visual[3][3];
+
 public :
-	Block(std::string name, std::set<Property> property);
+	Block(BlockId block_id, std::set<Property> property, char block_visual[10]);
+
 	void addProperty(Property property);
 	void addProperty(std::set<Property> property);
+
 	void removeProperty(Property property);
 	void removeProperty(const std::set<Property>& property);
 
 	bool containProperty(Property property) const;
 
-	bool move(MoveType move_type);
 };
 
 class Text : public Block
 {
 private :
+	Entity* this_entity;
 
 public :
-	Text(std::string name, std::set<Property> property);
+	Text(BlockId block_id, std::set<Property> property, char block_visual[10], Entity* this_entity = nullptr);
 
 	static Text baba;
 	static Text is;
@@ -38,6 +41,7 @@ public :
 	static Text push;
 	static Text stop;
 
+	Entity* getThisEntity();
 };
 
 class Entity : public Block
@@ -45,7 +49,7 @@ class Entity : public Block
 private :
 
 public :
-	Entity(std::string name, std::set<Property> property);
+	Entity(BlockId block_id, std::set<Property> property, char block_visual[10]);
 
 	static Entity baba;
 	static Entity flag;
