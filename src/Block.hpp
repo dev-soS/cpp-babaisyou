@@ -33,11 +33,16 @@ public:
 class Entity : public Block
 {
 private:
-	std::vector<std::tuple<size_t, size_t>> pos;
+	std::vector<std::tuple<size_t, size_t>> position;
 
 public:
 	Entity(BlockId block_id, std::set<Property> property, const char* block_visual);
 	~Entity(){}
+
+	const std::vector<std::tuple<size_t, size_t>>& getPosition() const;
+	void addPosition(std::tuple<size_t, size_t> pos);
+	bool modifyPosition(const std::tuple<size_t, size_t>& src, std::tuple<size_t, size_t> dst);
+	void resetPosition();
 
 	static Entity baba;
 	static Entity flag;
@@ -53,6 +58,9 @@ public:
 	Text(BlockId block_id, Property repr, std::set<Property> property, const char* block_visual, Entity* this_entity = nullptr);
 	~Text(){}
 
+	Entity* getThisEntity() const;
+	Property getRepr() const;
+
 	static Text baba;
 	static Text is;
 	static Text you;
@@ -60,9 +68,6 @@ public:
 	static Text win;
 	static Text push;
 	static Text stop;
-
-	Entity* getThisEntity() const;
-	Property getRepr() const;
 };
 
 #endif

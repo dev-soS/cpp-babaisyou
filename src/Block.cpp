@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "Block.hpp"
 
 Text Text::baba(BlockId::BABA, Property::ENTITY, { Property::PUSH }, "B A   B A", &Entity::baba);
@@ -92,4 +94,25 @@ Entity::Entity(BlockId block_id, std::set<Property> property, const char* block_
 	: Block(block_id, BlockType::ENTITY, property, block_visual)
 {
 
+}
+
+const std::vector<std::tuple<size_t, size_t>>& Entity::getPosition() const {
+	return position;
+}
+
+void Entity::addPosition(std::tuple<size_t, size_t> pos) {
+	position.push_back(pos);
+}
+
+bool Entity::modifyPosition(const std::tuple<size_t, size_t>& src, std::tuple<size_t, size_t> dst) {
+	if (auto iter = std::find(position.begin(), position.end(), src); iter != position.end())
+	{
+		*iter = dst;
+		return true;
+	}
+	return false;
+}
+
+void Entity::resetPosition() {
+	position.clear();
 }
