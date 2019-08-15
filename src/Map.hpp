@@ -66,8 +66,67 @@ public:
         return Height;
     }
 
+
+	void update()
+	{
+		int count = 0;
+		int tmp_x, tmp_y;
+		for (int y = 0; y < height; ++y )
+		{
+			for (int x = 0; x < width; ++x )
+			{
+				if ( map[y][x] != nullptr )
+				{
+					tmp_x = x;
+					tmp_y = y;
+					count = updateInternalHorizonal(0, x, y);
+					if ( count >= 3 )
+					{
+						update_blocks(map, std::make_tuple(tmp_x, tmp_y), MoveType::LEFT, count);
+					}
+				}
+			}
+		}
+
+		for ( int x = 0; x < width; ++x )
+		{
+			for ( int y = 0; y < height; ++y )
+			{
+				if ( map[y][x] != nullptr )
+				{
+					tmp_x = x;
+					tmp_y = y;
+					count = updateInternalVertical(0, x, y);
+					if ( count >= 3 )
+					{
+						update_blocks(map, std::make_tuple(tmp_x, tmp_y), MoveType::DOWN, count);
+					}
+				}
+			}
+		}
+	}
+
 private:
     std::unique_ptr<Block> map[Height][Width];
+
+
+	int updateInternalHorizonal(int count, int& x, int y)
+	{
+		if ( x < width || map[y][x] != nullptr)
+		{
+			count = updateInternalHorizonal(++count, ++x, y);
+		}
+		return count;
+	}
+
+	int updateInternalVertical(int count, int x, int& y)
+	{
+		if ( y < width || map[y][x] != nullptr )
+		{
+			count = updateInternalVertical(++count, x, ++y);
+		}
+		return count;
+	}
 };
 
 #endif
