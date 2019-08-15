@@ -46,12 +46,12 @@ public:
         return *this;
     }
 
-    Block* operator[](size_t idx)
+    Block** operator[](size_t idx)
     {
         return map[idx];
     }
 
-    const Block* operator[](size_t idx) const
+    const Block** operator[](size_t idx) const
     {
         return map[idx];
     }
@@ -107,7 +107,7 @@ public:
 	}
 
 private:
-    Block map[Height][Width];
+    Block* map[Height][Width];
 
 
 	int updateInternalHorizonal(int count, int& x, int y)
