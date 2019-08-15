@@ -53,7 +53,7 @@ public:
             return std::make_tuple(false, 0, 0);
         }
 
-        auto[possible, new_x, new_y] = next(pos, std::make_tuple(Width, Height), direction);
+        auto[possible, new_x, new_y] = next(pos, direction);
         if (!possible) 
         {
             return std::make_tuple(false, 0, 0);
@@ -71,14 +71,22 @@ public:
             return false;
         }
 
+        Map<Width, Height>& map_ref = *map;
+
         auto[x, y] = pos;
-        auto[possible, new_x, new_y] = movable(map, pos, direction);
+        auto[possible, new_x, new_y] = movable(pos, direction);
         if (possible)
         {
             // TODO: Replace map element type from std::unique_ptr<Block> to std::vector<std::unique_ptr<Block>>
             // TODO: Move specified block (ex. float)
-            move(map, std::make_tuple(new_x, new_y), direction);
-            map[new_y][new_x] = std::move(map[y][x]);
+            auto new_pos = std::make_tuple(new_x, new_y);
+            move(new_pos, direction);
+
+            Block* block = map[new_y][new_x] = std::move(map[y][x]);
+            if (block->getBlockType() == BlockType::ENTITY) {
+                Entity* entity = dynamic_cast<Entity*>(block);
+                entity->modifyPosition(pos, new_pos);
+            }
             return true;
         }
         return false;
@@ -142,18 +150,18 @@ public:
                 {
                     if (src_entity == nullptr)
                     {
-                        std::set<Property> properties = src_entity->getProperties();
-                        if (src_entity->getBlockId() != BlockId::PUSH)
-                        {
-                            properties.erase(Property::PUSH);
-                        }
-
-                        dst_entity->addProperty(properties);
+                        dst_entity->addProperty(src_text->getRepr());
                     }
                 }
                 else
                 {
-                    map_ref[prev_y][prev_x] = src;
+                    for (auto const& pos : dst_entity->getPosition())
+                    {
+                        auto[x, y] = pos;
+                        map_ref[y][x] = src_entity;
+                        src_entity->addPosition(pos);
+                    }
+                    dst_entity->resetPosition();
                 }
             }
         }
