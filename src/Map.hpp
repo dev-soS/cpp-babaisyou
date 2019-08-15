@@ -46,12 +46,12 @@ public:
         return *this;
     }
 
-    std::unique_ptr<Block>* operator[](size_t idx)
+    Block* operator[](size_t idx)
     {
         return map[idx];
     }
 
-    const std::unique_ptr<Block>* operator[](size_t idx) const
+    const Block* operator[](size_t idx) const
     {
         return map[idx];
     }
@@ -107,7 +107,7 @@ public:
 	}
 
 private:
-    std::unique_ptr<Block> map[Height][Width];
+    Block map[Height][Width];
 
 
 	int updateInternalHorizonal(int count, int& x, int y)
