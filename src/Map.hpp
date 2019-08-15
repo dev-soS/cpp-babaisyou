@@ -112,7 +112,7 @@ private:
 
 	int updateInternalHorizonal(int count, int& x, int y)
 	{
-		if ( x < width || map[y][x] != nullptr)
+		if ( x < width || map[y][x]->getBlockType() == BlockType::TEXT)
 		{
 			count = updateInternalHorizonal(++count, ++x, y);
 		}
@@ -121,7 +121,7 @@ private:
 
 	int updateInternalVertical(int count, int x, int& y)
 	{
-		if ( y < width || map[y][x] != nullptr )
+		if ( y < width || map[y][x]->getBlockType() == BlockType::TEXT )
 		{
 			count = updateInternalVertical(++count, x, ++y);
 		}
