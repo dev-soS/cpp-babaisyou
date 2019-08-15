@@ -91,7 +91,7 @@ public:
         return false;
     }
 
-    void update_blocks(std::tuple<size_t, size_t> pos, MoveType direction, size_t cnt)
+    void updateBlocks(std::tuple<size_t, size_t> pos, MoveType direction, size_t cnt)
     {
         if (map == nullptr)
         {
