@@ -20,14 +20,19 @@ enum class MoveType
 
 enum class BlockId
 {
-	BABATEXT,
-	FLAGTEXT,
-	ISTEXT,
-	YOUTEXT,
-	WINTEXT,
-	PUSHTEXT,
-	STOPTEXT,
-	BABAENTITY,
-	FLAGENTITY,
+	BABA,
+	FLAG,
+	IS,
+	YOU,
+	WIN,
+	PUSH,
+	STOP,
 };
+
+enum class BlockType
+{
+	TEXT,
+	ENTITY,
+};
+
 #endif
