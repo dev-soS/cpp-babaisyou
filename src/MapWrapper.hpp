@@ -19,8 +19,8 @@ public:
     static std::tuple<bool, size_t, size_t> next(std::tuple<size_t, size_t> pos, MoveType direction) {
         static std::map<MoveType, std::tuple<int, int>> deltas =
         {
-            { MoveType::UP, { 0, 1 } },
-            { MoveType::DOWN, { 0, -1 } },
+            { MoveType::UP, { 0, -1 } },
+            { MoveType::DOWN, { 0, 1 } },
             { MoveType::LEFT, { -1, 0, } },
             { MoveType::RIGHT, { 1, 0, } },
         };
