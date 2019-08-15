@@ -10,10 +10,11 @@ class Block
 protected:
 	std::set<Property> properties;
 	BlockId block_id;
+	BlockType block_type;
 	char block_visual[3][3];
 
 public:
-	Block(BlockId block_id, std::set<Property> property, const char* block_visual);
+	Block(BlockId block_id, BlockType block_type, std::set<Property> property, const char* block_visual);
 	virtual ~Block(){}
 
 	void addProperty(Property property);
@@ -23,7 +24,9 @@ public:
 	void removeProperty(const std::set<Property>& property);
 
 	bool containProperty(Property property) const;
+
 	BlockId getBlockId() const;
+	BlockType getBlockType() const;
 };
 
 class Entity : public Block
@@ -57,7 +60,5 @@ public:
 
 	Entity* getThisEntity() const;
 };
-
-
 
 #endif
