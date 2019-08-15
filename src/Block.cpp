@@ -48,6 +48,11 @@ void Block::removeProperty(const std::set<Property>& property)
 	}
 }
 
+const std::set<Property>& Block::getProperties() const
+{
+	return properties;
+}
+
 bool Block::containProperty(Property property) const
 {
 	return properties.find(property) != properties.end();

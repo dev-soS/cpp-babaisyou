@@ -23,6 +23,7 @@ public:
 	void removeProperty(Property property);
 	void removeProperty(const std::set<Property>& property);
 
+	const std::set<Property>& getProperties() const;
 	bool containProperty(Property property) const;
 
 	BlockId getBlockId() const;
