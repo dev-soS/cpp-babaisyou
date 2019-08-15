@@ -33,6 +33,7 @@ public:
 class Entity : public Block
 {
 private:
+	std::vector<std::tuple<size_t, size_t>> pos;
 
 public:
 	Entity(BlockId block_id, std::set<Property> property, const char* block_visual);
@@ -46,9 +47,10 @@ class Text : public Block
 {
 private:
 	Entity* this_entity;
+	Property repr;
 
 public:
-	Text(BlockId block_id, std::set<Property> property, const char* block_visual, Entity* this_entity = nullptr);
+	Text(BlockId block_id, Property repr, std::set<Property> property, const char* block_visual, Entity* this_entity = nullptr);
 	~Text(){}
 
 	static Text baba;
@@ -60,6 +62,7 @@ public:
 	static Text stop;
 
 	Entity* getThisEntity() const;
+	Property getRepr() const;
 };
 
 #endif

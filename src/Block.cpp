@@ -1,12 +1,12 @@
 #include "Block.hpp"
 
-Text Text::baba(BlockId::BABA, { Property::PUSH }, "B A   B A", &Entity::baba);
-Text Text::is(BlockId::IS, { Property::PUSH }, "   I S   ");
-Text Text::you(BlockId::YOU, { Property::PUSH }, "   YOU   ");
-Text Text::flag(BlockId::FLAG, { Property::PUSH }, "F L   A G", &Entity::flag);
-Text Text::win(BlockId::WIN, { Property::PUSH }, "   WIN   ");
-Text Text::push(BlockId::PUSH, { Property::PUSH }, "P U   S H");
-Text Text::stop(BlockId::STOP, { Property::PUSH }, "S T   O P");
+Text Text::baba(BlockId::BABA, Property::ENTITY, { Property::PUSH }, "B A   B A", &Entity::baba);
+Text Text::is(BlockId::IS, Property::INVALID, { Property::PUSH }, "   I S   ");
+Text Text::you(BlockId::YOU, Property::YOU, { Property::PUSH }, "   YOU   ");
+Text Text::flag(BlockId::FLAG, Property::ENTITY, { Property::PUSH }, "F L   A G", &Entity::flag);
+Text Text::win(BlockId::WIN, Property::WIN, { Property::PUSH }, "   WIN   ");
+Text Text::push(BlockId::PUSH, Property::PUSH, { Property::PUSH }, "P U   S H");
+Text Text::stop(BlockId::STOP, Property::STOP, { Property::PUSH }, "S T   O P");
 
 Entity Entity::baba(BlockId::BABA, {}, "/  OOOO O");
 Entity Entity::flag(BlockId::FLAG, {}, " |> | ===");
@@ -70,8 +70,8 @@ BlockType Block::getBlockType() const
 
 // CLASS TEXT PART ========================================
 
-Text::Text(BlockId block_id, std::set<Property> property, const char* block_visual, Entity* this_entity)
-	: Block(block_id, BlockType::TEXT, property, block_visual), this_entity(this_entity)
+Text::Text(BlockId block_id, Property repr, std::set<Property> property, const char* block_visual, Entity* this_entity)
+	: Block(block_id, BlockType::TEXT, property, block_visual), this_entity(this_entity), repr(repr)
 {
 
 }
@@ -79,6 +79,11 @@ Text::Text(BlockId block_id, std::set<Property> property, const char* block_visu
 Entity* Text::getThisEntity() const
 {
 	return this_entity;
+}
+
+Property Text::getRepr() const
+{
+	return repr;
 }
 
 // CLASS ENTITY PART ======================================
