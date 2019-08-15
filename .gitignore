@@ -2,4 +2,5 @@
 build
 
 # editor
+.vs
 .vscode

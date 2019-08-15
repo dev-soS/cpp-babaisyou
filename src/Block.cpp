@@ -49,14 +49,12 @@ void Block::removeProperty(const std::set<Property>& property)
 
 bool Block::containProperty(Property property) const
 {
-	if ( properties.find(property) == properties.end() )
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
+	return properties.find(property) != properties.end();
+}
+
+BlockId Block::getBlockId() const
+{
+	return block_id;
 }
 
 BlockId Block::getBlockID() const
@@ -71,7 +69,7 @@ Text::Text(BlockId block_id, std::set<Property> property, const char* block_visu
 
 }
 
-Entity* Text::getThisEntity()
+Entity* Text::getThisEntity() const
 {
 	return this_entity;
 }

@@ -7,15 +7,14 @@
 
 class Block
 {
-protected :
+protected:
 	std::set<Property> properties;
 	BlockId block_id;
 	char block_visual[3][3];
 
-public :
+public:
 	Block(BlockId block_id, std::set<Property> property, const char* block_visual);
-
-	virtual ~Block() = default;
+	virtual ~Block(){}
 
 	void addProperty(Property property);
 	void addProperty(std::set<Property> property);
@@ -24,16 +23,16 @@ public :
 	void removeProperty(const std::set<Property>& property);
 
 	bool containProperty(Property property) const;
-
-	BlockId getBlockID() const;
+	BlockId getBlockId() const;
 };
 
 class Entity : public Block
 {
-private :
+private:
 
-public :
+public:
 	Entity(BlockId block_id, std::set<Property> property, const char* block_visual);
+	~Entity(){}
 
 	static Entity baba;
 	static Entity flag;
@@ -41,11 +40,12 @@ public :
 
 class Text : public Block
 {
-private :
+private:
 	Entity* this_entity;
 
-public :
+public:
 	Text(BlockId block_id, std::set<Property> property, const char* block_visual, Entity* this_entity = nullptr);
+	~Text(){}
 
 	static Text baba;
 	static Text is;
@@ -55,7 +55,9 @@ public :
 	static Text push;
 	static Text stop;
 
-	Entity* getThisEntity();
+	Entity* getThisEntity() const;
 };
+
+
 
 #endif
