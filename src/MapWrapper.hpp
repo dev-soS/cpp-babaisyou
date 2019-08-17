@@ -19,21 +19,20 @@ public:
     static std::tuple<bool, size_t, size_t> next(std::tuple<size_t, size_t> pos, MoveType direction) {
         static std::map<MoveType, std::tuple<int, int>> deltas =
         {
-            { MoveType::UP, { 0, 1 } },
-            { MoveType::DOWN, { 0, -1 } },
+            { MoveType::UP, { 0, -1 } },
+            { MoveType::DOWN, { 0, 1 } },
             { MoveType::LEFT, { -1, 0, } },
             { MoveType::RIGHT, { 1, 0, } },
         };
 
         auto[x, y] = pos;
-        auto[width, height] = size;
         auto[dx, dy] = deltas[direction];
 
         int new_x = static_cast<int>(x) + dx;
         int new_y = static_cast<int>(y) + dy;
 
         auto valid = [](int src, int range) { return 0 <= src && src < range; };
-        return std::make_tuple(valid(new_x, width) && valid(new_y, height), new_x, new_y);
+        return std::make_tuple(valid(new_x, Width) && valid(new_y, Height), new_x, new_y);
     }
 
     std::tuple<bool, size_t, size_t> movable(std::tuple<size_t, size_t> pos, MoveType direction) const
@@ -60,8 +59,8 @@ public:
         }
 
         const std::unique_ptr<Block>& block = map_ref[new_y][new_x];
-        bool possible = block == nullptr || !block->containProperty(Property::STOP);
-        return std::make_tuple(possible, new_x, new_y);
+        bool move_possible = block == nullptr || !block->containProperty(Property::STOP);
+        return std::make_tuple(move_possible, new_x, new_y);
     }
 
     bool move(std::tuple<size_t, size_t> pos, MoveType direction)
@@ -92,14 +91,14 @@ public:
         return false;
     }
 
-    bool update_blocks(std::tuple<size_t, size_t> pos, MoveType direction, size_t cnt)
+    void updateBlocks(std::tuple<size_t, size_t> pos, MoveType direction, size_t cnt)
     {
         if (map == nullptr)
         {
             return false;
         }
 
-        Map<Width, height>& map_ref = *map;
+        Map<Width, Height>& map_ref = *map;
 
         auto text_is = [](Block* block) {
             return block->getBlockId() != BlockId::IS && block->getBlockType() != BlockType::TEXT;
