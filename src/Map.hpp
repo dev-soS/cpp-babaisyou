@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Block.hpp"
+#include "MapWarpper.hpp"
 
 template <size_t Width, size_t Height>
 class Map
@@ -65,7 +66,7 @@ public:
 					count = updateInternalHorizonal(0, x, y);
 					if ( count >= 3 )
 					{
-						update_blocks(map, std::make_tuple(tmp_x, tmp_y), MoveType::LEFT, count);
+						MapWrapper(this).update_blocks(std::make_tuple(tmp_x, tmp_y), MoveType::LEFT, count)
 					}
 				}
 			}
@@ -82,7 +83,7 @@ public:
 					count = updateInternalVertical(0, x, y);
 					if ( count >= 3 )
 					{
-						update_blocks(map, std::make_tuple(tmp_x, tmp_y), MoveType::DOWN, count);
+						MapWrapper(this).update_blocks(std::make_tuple(tmp_x, tmp_y), MoveType::DOWN, count);
 					}
 				}
 			}
