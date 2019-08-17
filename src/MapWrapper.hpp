@@ -45,7 +45,7 @@ public:
         Map<Width, Height>& map_ref = *map;
 
         auto[x, y] = pos;
-        const std::unique_ptr<Block>& current = map_ref[y][x];
+        const Block* current = map_ref[y][x];
         // TODO: Add property not only push, but also move etc.
         if (!current->containProperty(Property::PUSH))
         {
@@ -58,7 +58,7 @@ public:
             return std::make_tuple(false, 0, 0);
         }
 
-        const std::unique_ptr<Block>& block = map_ref[new_y][new_x];
+        const Block* block = map_ref[new_y][new_x];
         bool move_possible = block == nullptr || !block->containProperty(Property::STOP);
         return std::make_tuple(move_possible, new_x, new_y);
     }
