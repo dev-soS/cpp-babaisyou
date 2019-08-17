@@ -4,6 +4,7 @@
 #include "Enums.hpp"
 
 #include <set>
+#include <vector>
 
 class Block
 {
@@ -23,8 +24,10 @@ public:
 	void removeProperty(Property property);
 	void removeProperty(const std::set<Property>& property);
 
+	const std::set<Property>& getProperties() const;
 	bool containProperty(Property property) const;
 
+	auto getBlockVisual() const;
 	BlockId getBlockId() const;
 	BlockType getBlockType() const;
 };
@@ -32,10 +35,16 @@ public:
 class Entity : public Block
 {
 private:
+	std::vector<std::tuple<size_t, size_t>> position;
 
 public:
 	Entity(BlockId block_id, std::set<Property> property, const char* block_visual);
 	~Entity(){}
+
+	const std::vector<std::tuple<size_t, size_t>>& getPosition() const;
+	void addPosition(std::tuple<size_t, size_t> pos);
+	bool modifyPosition(const std::tuple<size_t, size_t>& src, std::tuple<size_t, size_t> dst);
+	void resetPosition();
 
 	static Entity baba;
 	static Entity flag;
@@ -45,10 +54,14 @@ class Text : public Block
 {
 private:
 	Entity* this_entity;
+	Property repr;
 
 public:
-	Text(BlockId block_id, std::set<Property> property, const char* block_visual, Entity* this_entity = nullptr);
+	Text(BlockId block_id, Property repr, std::set<Property> property, const char* block_visual, Entity* this_entity = nullptr);
 	~Text(){}
+
+	Entity* getThisEntity() const;
+	Property getRepr() const;
 
 	static Text baba;
 	static Text is;
@@ -57,8 +70,6 @@ public:
 	static Text win;
 	static Text push;
 	static Text stop;
-
-	Entity* getThisEntity() const;
 };
 
 #endif

@@ -23,28 +23,11 @@ public:
 
     ~Map() = default;
 
-    Map(Map&& other)
-    {
-        for(size_t i = 0; i < Height; ++i)
-        {
-            for(size_t j = 0; j < Width; ++j)
-            {
-                map[i][j] = std::move(other[i][j]);
-            }
-        }
-    }
+    Map(Map&&) = delete;
+    Map(const Map&) = delete;
 
-    Map& operator=(Map&& other)
-    {
-        for(size_t i = 0; i < Height; ++i)
-        {
-            for(size_t j = 0; j < Width; ++j)
-            {
-                map[i][j] = std::move(other[i][j]);
-            }
-        }
-        return *this;
-    }
+    Map& operator=(Map&&) noexcept = delete;
+    Map& operator=(const Map&) = delete;
 
     Block** operator[](size_t idx)
     {
@@ -108,7 +91,6 @@ public:
 
 private:
     Block* map[Height][Width];
-
 
 	int updateInternalHorizonal(int count, int& x, int y)
 	{
