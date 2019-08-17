@@ -2,6 +2,7 @@
 #define MAP_WRAPPER_HPP
 
 #include <map>
+#include <optional>
 #include <tuple>
 
 #include "Block.hpp"
@@ -134,7 +135,7 @@ public:
             prev = std::make_optional(pos);
             pos = std::make_tuple(next_x, next_y);
 
-            if (text_is(map[next_y][next_x]))
+            if (text_is(map_ref[next_y][next_x]))
             {
                 find = true;
                 break;
