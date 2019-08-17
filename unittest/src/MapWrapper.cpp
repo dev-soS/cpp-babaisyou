@@ -46,25 +46,31 @@ TEST_CASE("MapWrapper::movable", "[MapWrapper]")
     Map<3, 4> map;
     MapWrapper wrapper(&map);
 
+    // entity nullity validation
+    REQUIRE(fail(wrapper.movable(std::make_tuple(1, 0), MoveType::RIGHT)));
+
     Entity entity(BlockId::BABA, {}, "123456789");
-    map[1][1] = &entity;
+    map[0][1] = &entity;
 
     // push validation
-    REQUIRE(fail(wrapper.movable(std::make_tuple(1, 1), MoveType::RIGHT)));
+    REQUIRE(fail(wrapper.movable(std::make_tuple(1, 0), MoveType::RIGHT)));
 
     entity.addProperty(Property::PUSH);
-    REQUIRE(wrapper.movable(std::make_tuple(1, 1), MoveType::RIGHT)
-        == std::make_tuple(true, 2, 1));
+    REQUIRE(wrapper.movable(std::make_tuple(1, 0), MoveType::RIGHT)
+        == std::make_tuple(true, 2, 0));
+
+    // coordinate validation
+    REQUIRE(fail(wrapper.movable(std::make_tuple(1, 0), MoveType::UP)));
 
     // stop validation
     Entity entity2(BlockId::FLAG, {}, "123456789");
-    map[1][2] = &entity2;
+    map[0][2] = &entity2;
 
-    REQUIRE(wrapper.movable(std::make_tuple(1, 1), MoveType::RIGHT)
-        == std::make_tuple(true, 2, 1));
+    REQUIRE(wrapper.movable(std::make_tuple(1, 0), MoveType::RIGHT)
+        == std::make_tuple(true, 2, 0));
 
     entity2.addProperty(Property::STOP);
-    REQUIRE(fail(wrapper.movable(std::make_tuple(1, 1), MoveType::RIGHT)));
+    REQUIRE(fail(wrapper.movable(std::make_tuple(1, 0), MoveType::RIGHT)));
 }
 
 TEST_CASE("MapWrapper::move", "[MapWrapper]")
