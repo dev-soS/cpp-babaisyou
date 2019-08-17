@@ -104,7 +104,7 @@ public:
         return false;
     }
 
-    void updateBlocks(std::tuple<size_t, size_t> pos, MoveType direction, size_t cnt)
+    bool updateBlocks(std::tuple<size_t, size_t> pos, MoveType direction, size_t cnt)
     {
         // member nullity check
         if (map == nullptr)
