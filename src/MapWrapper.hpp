@@ -116,7 +116,9 @@ public:
         Map<Width, Height>& map_ref = *map;
 
         auto text_is = [](Block* block) {
-            return block->getBlockId() != BlockId::IS && block->getBlockType() != BlockType::TEXT;
+            return block != nullptr
+                && block->getBlockId() == BlockId::IS
+                && block->getBlockType() == BlockType::TEXT;
         };
 
         bool find = false;
