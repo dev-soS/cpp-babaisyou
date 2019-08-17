@@ -35,3 +35,18 @@ TEST_CASE("MapWrapper::next", "[MapWrapper]")
     auto[fail3, x3, y3] = MapWrapper<3, 4>::next(std::make_tuple(2, 3), MoveType::DOWN);
     REQUIRE(!fail3);
 }
+
+TEST_CASE("MapWrapper::movable", "[MapWrapper]")
+{
+
+}
+
+TEST_CASE("MapWrapper::move", "[MapWrapper]")
+{
+
+}
+
+TEST_CASE("MapWrapper::updateBlocks", "[MapWrapper]")
+{
+
+}
