@@ -91,7 +91,9 @@ public:
             // move adjacent entity
             move(new_pos, direction);
 
-            Block* block = map[new_y][new_x] = std::move(map[y][x]);
+            Block* block = map_ref[new_y][new_x] = map_ref[y][x];
+            map_ref[y][x] = nullptr;
+
             if (block->getBlockType() == BlockType::ENTITY) {
                 // modify position
                 Entity* entity = dynamic_cast<Entity*>(block);
