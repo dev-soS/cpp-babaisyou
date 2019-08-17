@@ -92,11 +92,11 @@ public:
         return false;
     }
 
-    void update_blocks(std::tuple<size_t, size_t> pos, MoveType direction, size_t cnt)
+    bool update_blocks(std::tuple<size_t, size_t> pos, MoveType direction, size_t cnt)
     {
         if (map == nullptr)
         {
-            return;
+            return false;
         }
 
         Map<Width, height>& map_ref = *map;
@@ -108,13 +108,12 @@ public:
         bool find = false;
         std::optional<std::tuple<size_t, size_t>> prev = std::nullopt;
 
-        size_t idx;
-        for (idx = 0; idx < cnt; ++idx)
+        for (size_t idx = 0; idx < cnt; ++idx)
         {
             auto[possible, next_x, next_y] = next(pos, direction);
             if (!possible)
             {
-                return;
+                return false;
             }
 
             prev = std::make_optional(pos);
@@ -127,15 +126,16 @@ public:
             }
         }
 
+        bool retn = false;
         if (find && prev.has_value())
         {
             auto[possible, next_x, next_y] = next(pos, direction);
             if (!possible)
             {
-                return;
+                return false;
             }
 
-            auto[prev_x, prev_y] = *prev;
+            auto[prev_x, prev_y] = prev.value();
             Block* dst = map_ref[prev_y][prev_x];
             Block* src = map_ref[next_y][next_x];
 
@@ -152,19 +152,21 @@ public:
                     {
                         dst_entity->addProperty(src_text->getRepr());
                     }
-                }
-                else
-                {
-                    for (auto const& pos : dst_entity->getPosition())
+                    else
                     {
-                        auto[x, y] = pos;
-                        map_ref[y][x] = src_entity;
-                        src_entity->addPosition(pos);
+                        for (auto const& pos : dst_entity->getPosition())
+                        {
+                            auto[x, y] = pos;
+                            map_ref[y][x] = src_entity;
+                            src_entity->addPosition(pos);
+                        }
+                        dst_entity->resetPosition();
                     }
-                    dst_entity->resetPosition();
+                    retn = true;
                 }
             }
         }
+        return retn;
     }
 
 private:
