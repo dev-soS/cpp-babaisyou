@@ -23,35 +23,18 @@ public:
 
     ~Map() = default;
 
-    Map(Map&& other)
-    {
-        for(size_t i = 0; i < Height; ++i)
-        {
-            for(size_t j = 0; j < Width; ++j)
-            {
-                map[i][j] = std::move(other[i][j]);
-            }
-        }
-    }
+    Map(Map&&) = delete;
+    Map(const Map&) = delete;
 
-    Map& operator=(Map&& other)
-    {
-        for(size_t i = 0; i < Height; ++i)
-        {
-            for(size_t j = 0; j < Width; ++j)
-            {
-                map[i][j] = std::move(other[i][j]);
-            }
-        }
-        return *this;
-    }
+    Map& operator=(Map&&) noexcept = delete;
+    Map& operator=(const Map&) = delete;
 
-    std::unique_ptr<Block>* operator[](size_t idx)
+    Block** operator[](size_t idx)
     {
         return map[idx];
     }
 
-    const std::unique_ptr<Block>* operator[](size_t idx) const
+    const Block** operator[](size_t idx) const
     {
         return map[idx];
     }
@@ -67,7 +50,7 @@ public:
     }
 
 private:
-    std::unique_ptr<Block> map[Height][Width];
+    Block* map[Height][Width];
 };
 
 #endif
