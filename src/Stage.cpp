@@ -54,3 +54,8 @@ void Stage::printMapOverall() const
 		}
 	}
 }
+
+void Stage::printMapPartially(std::tuple<size_t, size_t> pos, MoveType direction, size_t cnt) const
+{
+	auto[x, y] = pos;
+}

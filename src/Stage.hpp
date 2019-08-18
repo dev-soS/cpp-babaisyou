@@ -16,5 +16,6 @@ public:
 	void gotoxy(int x, int y);
 	void printBlock(Block* block, int x, int y) const;
 	void printMapOverall() const;
+	void printMapPartially(std::tuple<size_t, size_t> pos, MoveType direction, size_t cnt) const;
 };
 #endif
