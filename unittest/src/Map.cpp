@@ -14,7 +14,7 @@ TEST_CASE("Default Constructor", "[Map]")
     }
 }
 
-TEST_CASE("Update", "[Map]")
+TEST_CASE("Map::Update", "[Map]")
 {
 	Map<10, 10> map;
 
@@ -23,7 +23,24 @@ TEST_CASE("Update", "[Map]")
 	map[1][3] = &Text::you;
 
 	REQUIRE(!Entity::baba.containProperty(Property::YOU));
-	map.update();
+	REQUIRE(map.update());
 	REQUIRE(Entity::baba.containProperty(Property::YOU));
-	
+
+	map[2][1] = &Text::is;
+
+
+	Map<10, 10> map2;
+
+	map[1][1] = &Text::baba;
+	map[1][2] = &Text::is;
+	map[1][3] = &Entity::flag;
+
+	REQUIRE(!map2.update());
+
+	map[2][1] = &Text::baba;
+	map[2][2] = &Text::flag;
+	map[2][3] = &Text::win;
+
+	REQUIRE(map2.update());
+	REQUIRE(!Entity::baba.containProperty(Property::WIN));
 }

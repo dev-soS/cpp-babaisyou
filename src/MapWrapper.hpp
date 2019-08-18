@@ -7,7 +7,9 @@
 
 #include "Block.hpp"
 #include "Enums.hpp"
-#include "Map.hpp"
+
+template <size_t Width, size_t Height>
+class Map;
 
 template <size_t Width, size_t Height>
 class MapWrapper {

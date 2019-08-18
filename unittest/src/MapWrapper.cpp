@@ -1,7 +1,6 @@
 #include "Catch2/catch.hpp"
 
 #include "Map.hpp"
-#include "MapWrapper.hpp"
 
 TEST_CASE("MapWrapper::Constructor", "[MapWrapper]")
 {
