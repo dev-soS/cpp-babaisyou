@@ -1,7 +1,6 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
-#include <memory>
 #include <vector>
 
 #include "Block.hpp"
@@ -10,17 +9,7 @@ template <size_t Width, size_t Height>
 class Map
 {
 public:
-    Map()
-    {
-        for (size_t i = 0; i < Height; ++i)
-        {
-            for (size_t j = 0; j < Width; ++j)
-            {
-                map[i][j] = nullptr;
-            }
-        }
-    }
-
+    Map() = default;
     ~Map() = default;
 
     Map(Map&&) = delete;
@@ -29,12 +18,12 @@ public:
     Map& operator=(Map&&) noexcept = delete;
     Map& operator=(const Map&) = delete;
 
-    Block** operator[](size_t idx)
+    std::vector<Block*>* operator[](size_t idx)
     {
         return map[idx];
     }
 
-    const Block** operator[](size_t idx) const
+    const std::vector<Block*>* operator[](size_t idx) const
     {
         return map[idx];
     }
@@ -50,7 +39,7 @@ public:
     }
 
 private:
-    Block* map[Height][Width];
+    std::vector<Block*> map[Height][Width];
 };
 
 #endif
