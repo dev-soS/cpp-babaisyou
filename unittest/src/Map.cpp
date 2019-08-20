@@ -26,8 +26,21 @@ TEST_CASE("Map::Update", "[Map]")
 	REQUIRE(map.update());
 	REQUIRE(Entity::baba.containProperty(Property::YOU));
 
-	map[2][1] = &Text::is;
+	map[2][1] = &Text::baba;
+	map[2][2] = &Text::is;
+	map[2][3] = &Text::win;
 
+	REQUIRE(map.update());
+	REQUIRE(Entity::baba.containProperty(Property::YOU));
+	REQUIRE(Entity::baba.containProperty(Property::WIN));
+
+	map[3][1] = &Text::flag;
+	map[3][2] = &Text::is;
+	map[3][3] = &Text::baba;
+
+	REQUIRE(map.update());
+	REQUIRE(Entity::flag.containProperty(Property::YOU));
+	REQUIRE(Entity::flag.containProperty(Property::WIN));
 
 	Map<10, 10> map2;
 
@@ -43,4 +56,15 @@ TEST_CASE("Map::Update", "[Map]")
 
 	REQUIRE(map2.update());
 	REQUIRE(!Entity::baba.containProperty(Property::WIN));
+
+	map[3][1] = &Text::baba;
+	map[3][2] = &Text::is;
+	map[3][3] = &Text::win;
+	map[3][4] = &Text::you;
+
+	REQUIRE(map2.update());
+	REQUIRE(Entity::baba.containProperty(Property::WIN));
+	REQUIRE(!Entity::baba.containProperty(Property::YOU));
+
+
 }
