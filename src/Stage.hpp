@@ -1,9 +1,7 @@
-#pragma once
 #ifndef STAGE_HPP
 #define STAGE_HPP
 
 #include "Map.hpp"
-#include "MapWarpper.hpp"
 
 #include <Windows.h>
 

@@ -1,5 +1,5 @@
 #include "Stage.hpp"
-
+/*
 Stage::Stage(StageName stage_name) 
 	: stage(Map<20, 10>())
 {
@@ -59,3 +59,4 @@ void Stage::printMapPartially(std::tuple<size_t, size_t> pos, MoveType direction
 {
 	auto[x, y] = pos;
 }
+*/
