@@ -4,6 +4,7 @@
 #include "Enums.hpp"
 
 #include <set>
+#include <tuple>
 
 class Block
 {
