@@ -4,6 +4,7 @@
 #include "Map.hpp"
 
 #include <Windows.h>
+#include <iostream>
 
 class Stage
 {
@@ -12,8 +13,8 @@ private:
 public:
 	Stage(StageName stage_name);
 	void gotoxy(int x, int y);
-	void printBlock(Block* block, int x, int y) const;
-	void printMapOverall() const;
-	void printMapPartially(std::tuple<size_t, size_t> pos, MoveType direction, size_t cnt) const;
+	void printBlock(Block* block, int x, int y);
+	void printMapOverall();
+	void printMapFrame();
 };
 #endif

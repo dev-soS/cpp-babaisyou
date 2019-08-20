@@ -1,5 +1,7 @@
 #include "Stage.hpp"
-/*
+
+#include <string>
+
 Stage::Stage(StageName stage_name) 
 	: stage(Map<20, 10>())
 {
@@ -31,32 +33,37 @@ void Stage::gotoxy(int x, int y)
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
-void Stage::printBlock(Block* block, int x, int y) const
+void Stage::printBlock(Block* block, int x, int y)
 {
+	if ( block == nullptr ) return;
 	for ( int i = 0; i < 3; ++i )
 	{
-		gotoxy(3 * x, 3 * y + i);
-		for ( int j = 0; j < 3; ++j )
-		{
-			std::cout << block->getBlockVisual()[i][j];
-		}
+		gotoxy(4 * x + 1, 4 * y + i + 1);
+		std::cout << block->getBlockVisual()[i];
 	}
 }
 
 
-void Stage::printMapOverall() const
+void Stage::printMapOverall()
 {
 	for (int i = 0; i < 10; ++i )
 	{
-		for ( j = 0; j < 20; ++j )
+		for ( int j = 0; j < 20; ++j )
 		{
 			printBlock(stage[i][j], j, i);
 		}
 	}
 }
 
-void Stage::printMapPartially(std::tuple<size_t, size_t> pos, MoveType direction, size_t cnt) const
+void Stage::printMapFrame()
 {
-	auto[x, y] = pos;
+	for ( int i = 0; i < 10; ++i )
+	{
+		std::cout << "---------------------------------------------------------------------------------" << std::endl;
+		for ( int j = 0; j < 3; ++j )
+		{
+			std::cout << "|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |" << std::endl;
+		}
+	}
+	std::cout << "---------------------------------------------------------------------------------" << std::endl;
 }
-*/
