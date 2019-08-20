@@ -8,11 +8,9 @@
 class GameAgent
 {
 public:
-    GameAgent();
-    ~GameAgent();
+    GameAgent() = default;
+    ~GameAgent() = default;
 
-    bool GameAgent::checkWinCondition(std::vector<Entity::Position>, std::vector<Entity::Position>);
-
-    
+    bool checkWinCondition(std::vector<Entity::Position>, std::vector<Entity::Position>);
 };
 #endif

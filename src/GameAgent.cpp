@@ -8,10 +8,11 @@ bool GameAgent::checkWinCondition(std::vector<Entity::Position> you, std::vector
     {
         for(auto w : win)
         {
-            if(std::get<0>(y) == std::get<0>(y) && std::get<1>(w) == std::get<1>(w))
+            if(std::get<0>(y) == std::get<0>(w) && std::get<1>(y) == std::get<1>(w))
             {
                 return true;
             }
         }
     }
+    return false;
 }
