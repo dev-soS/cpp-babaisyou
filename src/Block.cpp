@@ -16,14 +16,15 @@ Entity Entity::flag(BlockId::FLAG, {}, " |> | ===");
 
 // CLASS BLOCK PART =======================================
 
-Block::Block(BlockId block_id, BlockType block_type, std::set<Property> property, const char* block_visual)
+Block::Block(BlockId block_id, BlockType block_type, std::set<Property> property, std::string block_visual)
 	: block_id(block_id), block_type(block_type), properties(property)
 {
-	for (int i = 0, k = 0; i < 3; ++i)
+	for ( int i = 0, j = 0; i < 3; ++i )
 	{
-		for (int j = 0; j < 3; ++j, ++k )
+		this->block_visual[i].resize(3);
+		for ( int k = 0; k < 3; ++k, ++j )
 		{
-			this->block_visual[i][j] = block_visual[k];
+			this->block_visual[i][k] = block_visual[j];
 		}
 	}
 }
@@ -61,7 +62,7 @@ bool Block::containProperty(Property property) const
 	return properties.find(property) != properties.end();
 }
 
-auto Block::getBlockVisual() const
+const std::string* Block::getBlockVisual() const
 {
 	return block_visual;
 }
@@ -78,7 +79,7 @@ BlockType Block::getBlockType() const
 
 // CLASS TEXT PART ========================================
 
-Text::Text(BlockId block_id, Property repr, std::set<Property> property, const char* block_visual, Entity* this_entity)
+Text::Text(BlockId block_id, Property repr, std::set<Property> property, std::string block_visual, Entity* this_entity)
 	: Block(block_id, BlockType::TEXT, property, block_visual), this_entity(this_entity), repr(repr)
 {
 
@@ -96,7 +97,7 @@ Property Text::getRepr() const
 
 // CLASS ENTITY PART ======================================
 
-Entity::Entity(BlockId block_id, std::set<Property> property, const char* block_visual)
+Entity::Entity(BlockId block_id, std::set<Property> property, std::string block_visual)
 	: Block(block_id, BlockType::ENTITY, property, block_visual)
 {
 
