@@ -37,11 +37,11 @@ TEST_CASE("[]Operator Overloading","[Map]")
 TEST_CASE("getWidth","[Map]")
 {
     Map<10,10> map;
-    REQUIRE(map.getWidth == 10);
+    REQUIRE(map.getWidth() == 10);
 }
 
-TEST_CASE("getHeight","[Map]")
+TEST_CASE("Map::getHeight","[Map]")
 {
     Map<10,10> map;
-    REQUIRE(map.getHeight == 10);
+    REQUIRE(map.getHeight() == 10);
 }
