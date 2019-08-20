@@ -16,3 +16,8 @@ bool GameAgent::checkWinCondition(std::vector<Entity::Position> you, std::vector
     }
     return false;
 }
+
+bool GameAgent::checkYouCondition(std::vector<Entity::Position> you)
+{
+    return you.empty();
+}

@@ -12,5 +12,7 @@ public:
     ~GameAgent() = default;
 
     bool checkWinCondition(std::vector<Entity::Position>, std::vector<Entity::Position>);
+    bool checkYouCondition(std::vector<Entity::Position>);
+
 };
 #endif
