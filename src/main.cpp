@@ -1,10 +1,13 @@
 #include <iostream>
 
-int main() {
-    std::cout << "Hello World !!" << std::endl;
+#include "Stage.hpp"
 
-    int n;
-    std::cin >> n;
-    std::cout << n << std::endl;
-    return 0;
+int main()
+{
+	Stage stage1(StageName::STAGE1_1);
+	stage1.printMapFrame();
+	stage1.printMapOverall();
+
+	int a;
+	std::cin >> a;
 }
