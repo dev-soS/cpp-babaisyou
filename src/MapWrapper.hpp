@@ -17,7 +17,8 @@ public:
         // Do nothing
     }
 
-    static std::tuple<bool, size_t, size_t> next(std::tuple<size_t, size_t> pos, MoveType direction) {
+    static std::tuple<bool, size_t, size_t> next(std::tuple<size_t, size_t> pos, MoveType direction)
+    {
         // delta values
         static std::map<MoveType, std::tuple<int, int>> deltas =
         {
@@ -39,7 +40,7 @@ public:
         return std::make_tuple(valid(new_x, Width) && valid(new_y, Height), new_x, new_y);
     }
 
-    std::tuple<bool, size_t, size_t> movable(std::tuple<size_t, size_t> pos, MoveType direction) const
+    std::tuple<bool, size_t, size_t> movable(std::tuple<size_t, size_t, size_t> pos, MoveType direction) const
     {
         // member nullity check
         if (map == nullptr)
@@ -50,156 +51,163 @@ public:
         Map<Width, Height>& map_ref = *map;
 
         // if current entity has push property
-        auto[x, y] = pos;
-        const Block* current = map_ref[y][x];
+        auto[x, y, z] = pos;
+        const std::vector<Block*>& current = map_ref[y][x];
         // TODO: Add property not only push, but also move etc.
-        if (current == nullptr || !current->containProperty(Property::PUSH))
+        if (current.size() <= z || !current[z]->containProperty(Property::PUSH))
         {
             return std::make_tuple(false, 0, 0);
         }
 
         // next coordinate validation
-        auto[possible, new_x, new_y] = next(pos, direction);
+        auto[possible, new_x, new_y] = next(std::make_tuple(x, y), direction);
         if (!possible) 
         {
             return std::make_tuple(false, 0, 0);
         }
 
         // stop validation
-        const Block* block = map_ref[new_y][new_x];
-        bool move_possible = block == nullptr || !block->containProperty(Property::STOP);
-        return std::make_tuple(move_possible, new_x, new_y);
+        const std::vector<Block*>& block = map_ref[new_y][new_x];
+        for (const Block* block : map_ref[new_y][new_x])
+        {
+            if (block->containProperty(Property::STOP))
+            {
+                return std::make_tuple(false, 0, 0);
+            }
+        }
+
+        return std::make_tuple(true, new_x, new_y);
     }
 
-    bool move(std::tuple<size_t, size_t> pos, MoveType direction)
-    {
-        // member nullity check
-        if (map == nullptr)
-        {
-            return false;
-        }
+    // bool move(std::tuple<size_t, size_t> pos, MoveType direction)
+    // {
+    //     // member nullity check
+    //     if (map == nullptr)
+    //     {
+    //         return false;
+    //     }
 
-        Map<Width, Height>& map_ref = *map;
+    //     Map<Width, Height>& map_ref = *map;
 
-        // if entity is movable
-        auto[x, y] = pos;
-        auto[possible, new_x, new_y] = movable(pos, direction);
-        if (possible)
-        {
-            // TODO: Replace map element type from Block* to std::vector<Block*>
-            // TODO: Move specified block (ex. float)
-            auto new_pos = std::make_tuple(new_x, new_y);
-            // move adjacent entity
-            move(new_pos, direction);
+    //     // if entity is movable
+    //     auto[x, y] = pos;
+    //     auto[possible, new_x, new_y] = movable(pos, direction);
+    //     if (possible)
+    //     {
+    //         // TODO: Replace map element type from Block* to std::vector<Block*>
+    //         // TODO: Move specified block (ex. float)
+    //         auto new_pos = std::make_tuple(new_x, new_y);
+    //         // move adjacent entity
+    //         move(new_pos, direction);
 
-            Block* block = map_ref[new_y][new_x] = map_ref[y][x];
-            map_ref[y][x] = nullptr;
+    //         Block* block = map_ref[new_y][new_x] = map_ref[y][x];
+    //         map_ref[y][x] = nullptr;
 
-            if (block->getBlockType() == BlockType::ENTITY) {
-                // modify position
-                Entity* entity = dynamic_cast<Entity*>(block);
-                entity->modifyPosition(pos, new_pos);
-            }
-            return true;
-        }
-        return false;
-    }
+    //         if (block->getBlockType() == BlockType::ENTITY) {
+    //             // modify position
+    //             Entity* entity = dynamic_cast<Entity*>(block);
+    //             entity->modifyPosition(pos, new_pos);
+    //         }
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
-    bool updateBlocks(std::tuple<size_t, size_t> pos, MoveType direction, size_t cnt)
-    {
-        // member nullity check
-        if (map == nullptr)
-        {
-            return false;
-        }
+    // bool updateBlocks(std::tuple<size_t, size_t> pos, MoveType direction, size_t cnt)
+    // {
+    //     // member nullity check
+    //     if (map == nullptr)
+    //     {
+    //         return false;
+    //     }
 
-        Map<Width, Height>& map_ref = *map;
+    //     Map<Width, Height>& map_ref = *map;
 
-        auto text_is = [](Block* block) {
-            return block != nullptr
-                && block->getBlockId() == BlockId::IS
-                && block->getBlockType() == BlockType::TEXT;
-        };
+    //     auto text_is = [](Block* block) {
+    //         return block != nullptr
+    //             && block->getBlockId() == BlockId::IS
+    //             && block->getBlockType() == BlockType::TEXT;
+    //     };
 
-        bool find = false;
-        std::optional<std::tuple<size_t, size_t>> prev = std::nullopt;
+    //     bool find = false;
+    //     std::optional<std::tuple<size_t, size_t>> prev = std::nullopt;
 
-        // find text `IS`
-        for (size_t idx = 0; idx < cnt; ++idx)
-        {
-            auto[possible, next_x, next_y] = next(pos, direction);
-            if (!possible)
-            {
-                return false;
-            }
+    //     // find text `IS`
+    //     for (size_t idx = 0; idx < cnt; ++idx)
+    //     {
+    //         auto[possible, next_x, next_y] = next(pos, direction);
+    //         if (!possible)
+    //         {
+    //             return false;
+    //         }
 
-            // store previous block
-            prev = std::make_optional(pos);
-            pos = std::make_tuple(next_x, next_y);
+    //         // store previous block
+    //         prev = std::make_optional(pos);
+    //         pos = std::make_tuple(next_x, next_y);
 
-            if (text_is(map_ref[next_y][next_x]))
-            {
-                find = true;
-                break;
-            }
-        }
+    //         if (text_is(map_ref[next_y][next_x]))
+    //         {
+    //             find = true;
+    //             break;
+    //         }
+    //     }
 
-        bool retn = false;
-        if (find && prev.has_value())
-        {
-            // if next block exists
-            auto[possible, next_x, next_y] = next(pos, direction);
-            if (!possible)
-            {
-                return false;
-            }
+    //     bool retn = false;
+    //     if (find && prev.has_value())
+    //     {
+    //         // if next block exists
+    //         auto[possible, next_x, next_y] = next(pos, direction);
+    //         if (!possible)
+    //         {
+    //             return false;
+    //         }
 
-            // get adjacent block
-            auto[prev_x, prev_y] = prev.value();
-            Block* dst = map_ref[prev_y][prev_x];
-            Block* src = map_ref[next_y][next_x];
+    //         // get adjacent block
+    //         auto[prev_x, prev_y] = prev.value();
+    //         Block* dst = map_ref[prev_y][prev_x];
+    //         Block* src = map_ref[next_y][next_x];
 
-            // nulllptr validation
-            if (dst == nullptr || src == nullptr)
-            {
-                return false;
-            }
+    //         // nulllptr validation
+    //         if (dst == nullptr || src == nullptr)
+    //         {
+    //             return false;
+    //         }
 
-            // if adjacent block is text type
-            if (src->getBlockType() == BlockType::TEXT && dst->getBlockType() == BlockType::TEXT)
-            {
-                Text* dst_text = dynamic_cast<Text*>(dst);
-                Text* src_text = dynamic_cast<Text*>(src);
+    //         // if adjacent block is text type
+    //         if (src->getBlockType() == BlockType::TEXT && dst->getBlockType() == BlockType::TEXT)
+    //         {
+    //             Text* dst_text = dynamic_cast<Text*>(dst);
+    //             Text* src_text = dynamic_cast<Text*>(src);
 
-                Entity* dst_entity = dst_text->getThisEntity();
-                Entity* src_entity = src_text->getThisEntity();
+    //             Entity* dst_entity = dst_text->getThisEntity();
+    //             Entity* src_entity = src_text->getThisEntity();
 
-                // if left one has entity
-                if (dst_entity != nullptr)
-                {
-                    // if right one is property
-                    if (src_entity == nullptr)
-                    {
-                        // add property to entity
-                        dst_entity->addProperty(src_text->getRepr());
-                    }
-                    else
-                    {
-                        // replace entity
-                        for (auto const& pos : dst_entity->getPosition())
-                        {
-                            auto[x, y] = pos;
-                            map_ref[y][x] = src_entity;
-                            src_entity->addPosition(pos);
-                        }
-                        dst_entity->resetPosition();
-                    }
-                    retn = true;
-                }
-            }
-        }
-        return retn;
-    }
+    //             // if left one has entity
+    //             if (dst_entity != nullptr)
+    //             {
+    //                 // if right one is property
+    //                 if (src_entity == nullptr)
+    //                 {
+    //                     // add property to entity
+    //                     dst_entity->addProperty(src_text->getRepr());
+    //                 }
+    //                 else
+    //                 {
+    //                     // replace entity
+    //                     for (auto const& pos : dst_entity->getPosition())
+    //                     {
+    //                         auto[x, y] = pos;
+    //                         map_ref[y][x] = src_entity;
+    //                         src_entity->addPosition(pos);
+    //                     }
+    //                     dst_entity->resetPosition();
+    //                 }
+    //                 retn = true;
+    //             }
+    //         }
+    //     }
+    //     return retn;
+    // }
 
 private:
     Map<Width, Height>* map;
