@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "Block.hpp"
-#include "MapWarpper.hpp"
+#include "MapWrapper.hpp"
 
 template <size_t Width, size_t Height>
 class Map
@@ -13,6 +13,7 @@ class Map
 public:
     Map()
     {
+		wrapper = MapWrapper<Width, Height>(this);
         for (size_t i = 0; i < Height; ++i)
         {
             for (size_t j = 0; j < Width; ++j)
@@ -51,13 +52,14 @@ public:
     }
 
 
-	void update()
+	bool update()
 	{
 		int count = 0;
 		int tmp_x, tmp_y;
-		for (int y = 0; y < height; ++y )
+		bool change_property = false;
+		for (int y = 0; y < Height; ++y )
 		{
-			for (int x = 0; x < width; ++x )
+			for (int x = 0; x < Width; ++x )
 			{
 				if ( map[y][x] != nullptr )
 				{
@@ -66,15 +68,15 @@ public:
 					count = updateInternalHorizonal(0, x, y);
 					if ( count >= 3 )
 					{
-						MapWrapper(this).update_blocks(std::make_tuple(tmp_x, tmp_y), MoveType::LEFT, count)
+						if ( wrapper.updateBlocks(std::make_tuple(tmp_x, tmp_y), MoveType::LEFT, count) ) change_property = true;
 					}
 				}
 			}
 		}
 
-		for ( int x = 0; x < width; ++x )
+		for ( int x = 0; x < Width; ++x )
 		{
-			for ( int y = 0; y < height; ++y )
+			for ( int y = 0; y < Height; ++y )
 			{
 				if ( map[y][x] != nullptr )
 				{
@@ -83,19 +85,22 @@ public:
 					count = updateInternalVertical(0, x, y);
 					if ( count >= 3 )
 					{
-						MapWrapper(this).update_blocks(std::make_tuple(tmp_x, tmp_y), MoveType::DOWN, count);
+						if ( wrapper.updateBlocks(std::make_tuple(tmp_x, tmp_y), MoveType::DOWN, count) ) change_property = true;
 					}
 				}
 			}
 		}
+
+		return change_property;
 	}
 
 private:
     Block* map[Height][Width];
+	MapWrapper<Width, Height> wrapper;
 
 	int updateInternalHorizonal(int count, int& x, int y)
 	{
-		if ( x < width || map[y][x]->getBlockType() == BlockType::TEXT)
+		if ( x < Width && map[y][x] != nullptr && map[y][x]->getBlockType() == BlockType::TEXT )
 		{
 			count = updateInternalHorizonal(++count, ++x, y);
 		}
@@ -104,7 +109,7 @@ private:
 
 	int updateInternalVertical(int count, int x, int& y)
 	{
-		if ( y < width || map[y][x]->getBlockType() == BlockType::TEXT )
+		if ( y < Height && map[y][x] != nullptr && map[y][x]->getBlockType() == BlockType::TEXT )
 		{
 			count = updateInternalVertical(++count, x, ++y);
 		}
