@@ -33,16 +33,19 @@ public:
 
 class Entity : public Block
 {
+public:
+	using Position = std::tuple<size_t, size_t, size_t>;
+
 private:
-	std::vector<std::tuple<size_t, size_t>> position;
+	std::vector<Position> position;
 
 public:
 	Entity(BlockId block_id, std::set<Property> property, const char* block_visual);
 	~Entity(){}
 
-	const std::vector<std::tuple<size_t, size_t>>& getPosition() const;
-	void addPosition(std::tuple<size_t, size_t> pos);
-	bool modifyPosition(const std::tuple<size_t, size_t>& src, std::tuple<size_t, size_t> dst);
+	const std::vector<Position>& getPosition() const;
+	void addPosition(Position pos);
+	bool modifyPosition(const Position& src, Position dst);
 	void resetPosition();
 
 	static Entity baba;
