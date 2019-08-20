@@ -79,39 +79,53 @@ public:
         return std::make_tuple(true, new_x, new_y);
     }
 
-    // bool move(std::tuple<size_t, size_t> pos, MoveType direction)
-    // {
-    //     // member nullity check
-    //     if (map == nullptr)
-    //     {
-    //         return false;
-    //     }
+    bool move(std::tuple<size_t, size_t, size_t> pos, MoveType direction)
+    {
+        // member nullity check
+        if (map == nullptr)
+        {
+            return false;
+        }
 
-    //     Map<Width, Height>& map_ref = *map;
+        Map<Width, Height>& map_ref = *map;
 
-    //     // if entity is movable
-    //     auto[x, y] = pos;
-    //     auto[possible, new_x, new_y] = movable(pos, direction);
-    //     if (possible)
-    //     {
-    //         // TODO: Replace map element type from Block* to std::vector<Block*>
-    //         // TODO: Move specified block (ex. float)
-    //         auto new_pos = std::make_tuple(new_x, new_y);
-    //         // move adjacent entity
-    //         move(new_pos, direction);
+        // if entity is movable
+        auto[x, y, z] = pos;
+        auto[possible, new_x, new_y] = movable(pos, direction);
+        if (possible)
+        {
+            // push validation
+            int new_z = 0;
+            for (const Block* block : map_ref[new_y][new_x])
+            {
+                if (block->containProperty(Property::PUSH))
+                {
+                    break;
+                }
+                ++new_z;
+            }
 
-    //         Block* block = map_ref[new_y][new_x] = map_ref[y][x];
-    //         map_ref[y][x] = nullptr;
+            // if push property exist in some blocks
+            if (new_z < map_ref[new_y][new_x].size())
+            {
+                move(std::make_tuple(new_x, new_y, new_z), direction);
+            }
 
-    //         if (block->getBlockType() == BlockType::ENTITY) {
-    //             // modify position
-    //             Entity* entity = dynamic_cast<Entity*>(block);
-    //             entity->modifyPosition(pos, new_pos);
-    //         }
-    //         return true;
-    //     }
-    //     return false;
-    // }
+            // move block
+            Block* block = map_ref[y][x][z];
+            map_ref[new_y][new_x].push_back(block);
+            map_ref[y][x].erase(map_ref[y][x].begin() + z);
+
+            if (block->getBlockType() == BlockType::ENTITY) {
+                // modify position
+                Entity* entity = dynamic_cast<Entity*>(block);
+                size_t z_axis = map_ref[new_y][new_x].size() - 1;
+                entity->modifyPosition(pos, std::make_tuple(new_x, new_y, z_axis));
+            }
+            return true;
+        }
+        return false;
+    }
 
     // bool updateBlocks(std::tuple<size_t, size_t> pos, MoveType direction, size_t cnt)
     // {
