@@ -159,6 +159,12 @@ public:
             Block* dst = map_ref[prev_y][prev_x];
             Block* src = map_ref[next_y][next_x];
 
+            // nulllptr validation
+            if (dst == nullptr || src == nullptr)
+            {
+                return false;
+            }
+
             // if adjacent block is text type
             if (src->getBlockType() == BlockType::TEXT && dst->getBlockType() == BlockType::TEXT)
             {
