@@ -2,7 +2,7 @@
 
 #include "Map.hpp"
 
-TEST_CASE("Default Constructor", "[Map]")
+TEST_CASE("Map::Default Constructor", "[Map]")
 {
     Map<10, 10> map;
     for (int i = 0; i < 10; ++i)
@@ -14,7 +14,7 @@ TEST_CASE("Default Constructor", "[Map]")
     }
 }
 
-TEST_CASE("[]Operator Overloading","[Map]")
+TEST_CASE("Map::[]Operator Overloading","[Map]")
 {
     Block block1(BlockId::BABA, BlockType::ENTITY, { Property::PUSH }, "         ");
     Block block2(BlockId::BABA, BlockType::ENTITY, { Property::YOU }, "         ");
@@ -34,7 +34,7 @@ TEST_CASE("[]Operator Overloading","[Map]")
     REQUIRE(map[1][1] == &block4 );
 }
 
-TEST_CASE("getWidth","[Map]")
+TEST_CASE("Map::getWidth","[Map]")
 {
     Map<10,10> map;
     REQUIRE(map.getWidth() == 10);
