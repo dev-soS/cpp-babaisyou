@@ -86,16 +86,21 @@ public:
         // if entity is movable
         auto[x, y] = pos;
         auto[possible, new_x, new_y] = movable(pos, direction);
-        if (possible)
-        {
-            // TODO: Replace map element type from Block* to std::vector<Block*>
-            // TODO: Move specified block (ex. float)
-            auto new_pos = std::make_tuple(new_x, new_y);
-            // move adjacent entity
-            move(new_pos, direction);
+		if ( possible )
+		{
+			// TODO: Replace map element type from Block* to std::vector<Block*>
+			// TODO: Move specified block (ex. float)
+			auto new_pos = std::make_tuple(new_x, new_y);
+			// move adjacent entity
+			move(new_pos, direction);
+
+			if ( map_ref[y][x] == nullptr )
+			{
+				return false;
+			}
 
             Block* block = map_ref[new_y][new_x] = map_ref[y][x];
-            map_ref[y][x] = nullptr;
+			map_ref[y][x] = nullptr;
 
             if (block->getBlockType() == BlockType::ENTITY) {
                 // modify position
@@ -160,6 +165,11 @@ public:
             auto[prev_x, prev_y] = prev.value();
             Block* dst = map_ref[prev_y][prev_x];
             Block* src = map_ref[next_y][next_x];
+
+			if ( dst == nullptr || src == nullptr )
+			{
+				return false;
+			}
 
             // if adjacent block is text type
             if (src->getBlockType() == BlockType::TEXT && dst->getBlockType() == BlockType::TEXT)
