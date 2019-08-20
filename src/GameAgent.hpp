@@ -1,8 +1,6 @@
 #ifndef GAMEAGENT_HPP
 #define GAMEAGENT_HPP
 
-
-
 #include "Block.hpp"
 
 class GameAgent

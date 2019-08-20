@@ -4,11 +4,11 @@
 
 bool GameAgent::checkWinCondition(std::vector<Entity::Position> you, std::vector<Entity::Position> win )
 {
-    for(auto y : you)
+    for(auto [you_x, you_y, you_z] : you)
     {
-        for(auto w : win)
+        for(auto [win_x, win_y, win_z] : win)
         {
-            if(std::get<0>(y) == std::get<0>(w) && std::get<1>(y) == std::get<1>(w))
+            if(you_x == win_x && you_y == win_y)
             {
                 return true;
             }
