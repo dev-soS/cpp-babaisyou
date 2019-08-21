@@ -2,6 +2,7 @@
 #define GAMEAGENT_HPP
 
 #include "Block.hpp"
+#include "Map.hpp"
 
 class GameAgent
 {
@@ -9,8 +10,7 @@ public:
     GameAgent() = default;
     ~GameAgent() = default;
 
-    bool checkWinCondition(std::vector<Entity::Position>, std::vector<Entity::Position>);
-    bool checkYouCondition(std::vector<Entity::Position>);
-
+    bool checkWinCondition(const std::vector<Entity::Position>& you, const std::vector<Entity::Position>& win);
+    bool checkRemainYou(const std::vector<Entity::Position>& you);
 };
 #endif

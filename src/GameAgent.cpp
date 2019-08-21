@@ -1,8 +1,9 @@
 #include <vector>
 
 #include "GameAgent.hpp"
+#include "Map.hpp"
 
-bool GameAgent::checkWinCondition(std::vector<Entity::Position> you, std::vector<Entity::Position> win )
+bool GameAgent::checkWinCondition(const std::vector<Entity::Position>& you, const std::vector<Entity::Position>& win )
 {
     for(auto [you_x, you_y, you_z] : you)
     {
@@ -17,7 +18,7 @@ bool GameAgent::checkWinCondition(std::vector<Entity::Position> you, std::vector
     return false;
 }
 
-bool GameAgent::checkYouCondition(std::vector<Entity::Position> you)
+bool GameAgent::checkRemainYou(const std::vector<Entity::Position>& you)
 {
     return you.empty();
 }
