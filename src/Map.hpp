@@ -38,6 +38,7 @@ public:
         return Height;
     }
 
+    
 private:
     std::vector<Block*> map[Height][Width];
 };
