@@ -103,15 +103,15 @@ Entity::Entity(BlockId block_id, std::set<Property> property, std::string block_
 
 }
 
-const std::vector<std::tuple<size_t, size_t>>& Entity::getPosition() const {
+const std::vector<Entity::Position>& Entity::getPosition() const {
 	return position;
 }
 
-void Entity::addPosition(std::tuple<size_t, size_t> pos) {
+void Entity::addPosition(Entity::Position pos) {
 	position.push_back(pos);
 }
 
-bool Entity::modifyPosition(const std::tuple<size_t, size_t>& src, std::tuple<size_t, size_t> dst) {
+bool Entity::modifyPosition(const Entity::Position& src, Entity::Position dst) {
 	if (auto iter = std::find(position.begin(), position.end(), src); iter != position.end())
 	{
 		*iter = dst;

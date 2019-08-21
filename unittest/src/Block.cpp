@@ -77,53 +77,53 @@ TEST_CASE("Entity::Entity", "[Block]")
 TEST_CASE("Entity::getPosition", "[Block]")
 {
 	Entity entity(BlockId::BABA, { Property::PUSH , Property::YOU}, "         ");
-	REQUIRE(entity.getPosition() == std::vector<std::tuple<size_t, size_t>>());
+	REQUIRE(entity.getPosition() == std::vector<Entity::Position>());
 }
 
 TEST_CASE("Entity::addPosition", "[Block]")
 {
-	using PosVec = std::vector<std::tuple<size_t, size_t>>;
+	using PosVec = std::vector<Entity::Position>;
 
 	Entity entity(BlockId::BABA, { Property::PUSH , Property::YOU}, "         ");
 
-	entity.addPosition(std::make_tuple(0, 0));
-	REQUIRE(entity.getPosition() == PosVec{ std::make_tuple(0, 0) });
+	entity.addPosition(std::make_tuple(0, 0, 0));
+	REQUIRE(entity.getPosition() == PosVec{ std::make_tuple(0, 0, 0) });
 
-	entity.addPosition(std::make_tuple(1, 2));
-	entity.addPosition(std::make_tuple(4, 10));
+	entity.addPosition(std::make_tuple(1, 2, 3));
+	entity.addPosition(std::make_tuple(4, 10, 2));
 	REQUIRE(entity.getPosition() 
-		== PosVec{ std::make_tuple(0, 0), std::make_tuple(1, 2), std::make_tuple(4, 10) });
+		== PosVec{ std::make_tuple(0, 0, 0), std::make_tuple(1, 2, 3), std::make_tuple(4, 10, 2) });
 }
 
 TEST_CASE("Entity::modifyPosition", "[Block]")
 {
-	using PosVec = std::vector<std::tuple<size_t, size_t>>;
+	using PosVec = std::vector<Entity::Position>;
 
 	Entity entity(BlockId::BABA, { Property::PUSH , Property::YOU}, "         ");
 
-	entity.addPosition(std::make_tuple(0, 0));
-	entity.addPosition(std::make_tuple(1, 2));
-	entity.addPosition(std::make_tuple(4, 10));
+	entity.addPosition(std::make_tuple(0, 0, 0));
+	entity.addPosition(std::make_tuple(1, 2, 3));
+	entity.addPosition(std::make_tuple(4, 10, 2));
 
-	entity.modifyPosition(std::make_tuple(1, 2), std::make_tuple(5, 3));
+	entity.modifyPosition(std::make_tuple(1, 2, 3), std::make_tuple(5, 3, 4));
 	REQUIRE(entity.getPosition()
-		== PosVec{ std::make_tuple(0, 0), std::make_tuple(5, 3), std::make_tuple(4, 10) });
+		== PosVec{ std::make_tuple(0, 0, 0), std::make_tuple(5, 3, 4), std::make_tuple(4, 10, 2) });
 
-	entity.modifyPosition(std::make_tuple(5, 3), std::make_tuple(2, 10));
-	entity.modifyPosition(std::make_tuple(0, 0), std::make_tuple(1, 1));
+	entity.modifyPosition(std::make_tuple(5, 3, 4), std::make_tuple(2, 10, 5));
+	entity.modifyPosition(std::make_tuple(0, 0, 0), std::make_tuple(1, 1, 1));
 	REQUIRE(entity.getPosition()
-		== PosVec{ std::make_tuple(1, 1), std::make_tuple(2, 10), std::make_tuple(4, 10) });
+		== PosVec{ std::make_tuple(1, 1, 1), std::make_tuple(2, 10, 5), std::make_tuple(4, 10, 2) });
 }
 
 TEST_CASE("Entity::resetPosition", "[Block]")
 {
-	using PosVec = std::vector<std::tuple<size_t, size_t>>;
+	using PosVec = std::vector<Entity::Position>;
 
 	Entity entity(BlockId::BABA, { Property::PUSH , Property::YOU}, "         ");
 
-	entity.addPosition(std::make_tuple(0, 0));
-	entity.addPosition(std::make_tuple(1, 2));
-	entity.addPosition(std::make_tuple(4, 10));
+	entity.addPosition(std::make_tuple(0, 0, 0));
+	entity.addPosition(std::make_tuple(1, 2, 3));
+	entity.addPosition(std::make_tuple(4, 10, 2));
 
 	entity.resetPosition();
 	REQUIRE(entity.getPosition() == PosVec());
