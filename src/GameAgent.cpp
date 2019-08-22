@@ -3,6 +3,11 @@
 #include "GameAgent.hpp"
 #include "Map.hpp"
 
+GameAgent::GameAgent(IOInterface* io) : io(io)
+{
+    // Do nothing
+}
+
 bool GameAgent::checkWinCondition(const std::vector<Entity::Position>& you, const std::vector<Entity::Position>& win )
 {
     for(auto [you_x, you_y, you_z] : you)
