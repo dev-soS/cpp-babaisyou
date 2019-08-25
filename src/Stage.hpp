@@ -13,7 +13,7 @@ private:
 public:
 	Stage(StageName stage_name);
 	void gotoxy(int x, int y);
-	void printBlock(Block* block, int x, int y);
+	void printBlock(const std::vector<Block*>& blocks, int x, int y);
 	void printMapOverall();
 	void printMapFrame();
 };

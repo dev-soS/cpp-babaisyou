@@ -3,21 +3,20 @@
 #include <string>
 
 Stage::Stage(StageName stage_name) 
-	: stage(Map<20, 10>())
 {
 	switch ( stage_name )
 	{
 	case StageName::STAGE1_1:
-		stage[1][1] = &Text::baba;
-		stage[1][2] = &Text::is;
-		stage[1][3] = &Text::you;
+		stage[1][1].push_back(&Text::baba);
+		stage[1][2].push_back(&Text::is);
+		stage[1][3].push_back(&Text::you);
 
-		stage[1][16] = &Text::flag;
-		stage[1][17] = &Text::is;
-		stage[1][18] = &Text::win;
+		stage[1][16].push_back(&Text::flag);
+		stage[1][17].push_back(&Text::is);
+		stage[1][18].push_back(&Text::you);
 
-		stage[5][2] = &Entity::baba;
-		stage[5][17] = &Entity::flag;
+		stage[5][2].push_back(&Entity::baba);
+		stage[5][17].push_back(&Entity::flag);
 
 		stage.update();
 		break;
@@ -33,13 +32,13 @@ void Stage::gotoxy(int x, int y)
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
-void Stage::printBlock(Block* block, int x, int y)
+void Stage::printBlock(const std::vector<Block*>& blocks, int x, int y)
 {
-	if ( block == nullptr ) return;
+	if ( blocks.empty() ) return;
 	for ( int i = 0; i < 3; ++i )
 	{
 		gotoxy(4 * x + 1, 4 * y + i + 1);
-		std::cout << block->getBlockVisual()[i];
+		std::cout << blocks.back()->getBlockVisual()[i];
 	}
 }
 
