@@ -43,7 +43,7 @@ TEST_CASE("MapWrapper::movable", "[MapWrapper]")
 	
     // preparing test
     Map<3, 4> map;
-    MapWrapper wrapper(&map);
+    MapWrapper<3, 4> wrapper(&map);
 
     // entity nullity validation
     REQUIRE(fail(wrapper.movable(std::make_tuple(1, 0, 0), MoveType::RIGHT)));
@@ -83,7 +83,7 @@ TEST_CASE("MapWrapper::move", "[MapWrapper]")
 
     // preparing test
     Map<4, 3> map;
-    MapWrapper wrapper(&map);
+    MapWrapper<4, 3> wrapper(&map);
 
     // movable entity validation
     // 1. entity nullity
@@ -151,7 +151,7 @@ TEST_CASE("MapWrapper::updateBlocks", "[MapWrapper]")
 
     // preparing test
     Map<4, 3> map;
-    MapWrapper wrapper(&map);
+    MapWrapper<4, 3> wrapper(&map);
 
     const char* visual = "123456789";
 

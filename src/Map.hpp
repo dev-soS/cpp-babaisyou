@@ -11,7 +11,10 @@ class Map
 {
 public:
 
-    Map() = default;
+	Map()
+	{
+		wrapper = MapWrapper<Width, Height>(this);
+	}
     ~Map() = default;
 
     Map(Map&&) = delete;
@@ -49,14 +52,14 @@ public:
 		{
 			for (int x = 0; x < Width; ++x )
 			{
-				if ( map[y][x].empty() )
+				if ( !map[y][x].empty() )
 				{
 					tmp_x = x;
 					tmp_y = y;
 					count = updateInternalHorizonal(0, x, y);
 					if ( count >= 3 )
 					{
-						if ( wrapper.updateBlocks(std::make_tuple(tmp_x, tmp_y), MoveType::LEFT, count) ) change_property = true;
+						if ( wrapper.updateBlocks(std::make_tuple(tmp_x, tmp_y), MoveType::RIGHT, count) ) change_property = true;
 					}
 				}
 			}
@@ -66,7 +69,7 @@ public:
 		{
 			for ( int y = 0; y < Height; ++y )
 			{
-				if ( map[y][x].empty() )
+				if ( !map[y][x].empty() )
 				{
 					tmp_x = x;
 					tmp_y = y;
