@@ -127,7 +127,7 @@ public:
         return false;
     }
 
-    bool updateBlocks(std::tuple<size_t, size_t, size_t> pos, MoveType direction, size_t cnt)
+    bool updateBlocks(std::tuple<size_t, size_t> pos, MoveType direction, size_t cnt)
     {
         // member nullity check
         if (map == nullptr)
@@ -144,22 +144,20 @@ public:
         };
 
         bool find = false;
-        auto[px, py, pz] = pos;
-        auto pos_2d = std::make_tuple(px, py);
         std::optional<std::tuple<size_t, size_t>> prev = std::nullopt;
 
         // find text `IS`
         for (size_t idx = 0; idx < cnt; ++idx)
         {
-            auto[possible, next_x, next_y] = next(pos_2d, direction);
+            auto[possible, next_x, next_y] = next(pos, direction);
             if (!possible)
             {
                 return false;
             }
 
             // store previous block
-            prev = std::make_optional(pos_2d);
-            pos_2d = std::make_tuple(next_x, next_y);
+            prev = std::make_optional(pos);
+            pos = std::make_tuple(next_x, next_y);
 
             size_t find_z = 0;
             for (Block* block : map_ref[next_y][next_x])
@@ -182,7 +180,7 @@ public:
         if (find && prev.has_value())
         {
             // if next block exists
-            auto[possible, next_x, next_y] = next(pos_2d, direction);
+            auto[possible, next_x, next_y] = next(pos, direction);
             if (!possible)
             {
                 return false;
