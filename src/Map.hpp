@@ -40,7 +40,6 @@ public:
         return Height;
     }
 
-
 	bool update()
 	{
 		int count = 0;
@@ -107,6 +106,7 @@ private:
 			if ( y < Height && !map[y][x].empty() && map[y][x]->getBlockType() == BlockType::TEXT )
 			{
 				count = updateInternalVertical(++count, x, ++y);
+				break;
 			}
 		}
 		return count;
