@@ -66,7 +66,7 @@ public:
 		{
 			for ( int y = 0; y < Height; ++y )
 			{
-				if ( map[y][x] != nullptr )
+				if ( map[y][x].empty() )
 				{
 					tmp_x = x;
 					tmp_y = y;
@@ -103,7 +103,7 @@ private:
 	int updateInternalVertical(int count, int x, int& y)
 	{
 		for ( Block* block : map[y][x] ){
-			if ( y < Height && !map[y][x].empty() && map[y][x]->getBlockType() == BlockType::TEXT )
+			if ( y < Height && !map[y][x].empty() && block->getBlockType() == BlockType::TEXT )
 			{
 				count = updateInternalVertical(++count, x, ++y);
 				break;

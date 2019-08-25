@@ -14,4 +14,11 @@ int main()
 	stage1.printMapOverall();
 	stage1.printMapOverall();
 	stage1.printMapOverall();
+	stage1.printMapOverall();
+	stage1.printMapOverall();
+	stage1.printMapOverall();
+
+	int b;
+	std::cin >> b;
+
 }
