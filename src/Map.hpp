@@ -89,26 +89,35 @@ private:
 
 	int updateInternalHorizonal(int count, int& x, int y)
 	{
-		for ( Block* block : map[y][x] )
+		if ( x < Width && !map[y][x].empty() )
 		{
-			if ( x < Width && !map[y][x].empty() && block->getBlockType() == BlockType::TEXT )
+			for ( Block* block : map[y][x] )
 			{
-				count = updateInternalHorizonal(++count, ++x, y);
-				break;
+				if ( block->getBlockType() == BlockType::TEXT )
+				{
+					count = updateInternalHorizonal(++count, ++x, y);
+					break;
+				}
 			}
 		}
+		
 		return count;
 	}
 
 	int updateInternalVertical(int count, int x, int& y)
 	{
-		for ( Block* block : map[y][x] ){
-			if ( y < Height && !map[y][x].empty() && block->getBlockType() == BlockType::TEXT )
+		if ( y < Height && !map[y][x].empty() )
+		{
+			for ( Block* block : map[y][x] )
 			{
-				count = updateInternalVertical(++count, x, ++y);
-				break;
+				if ( block->getBlockType() == BlockType::TEXT )
+				{
+					count = updateInternalVertical(++count, x, ++y);
+					break;
+				}
 			}
 		}
+		
 		return count;
 	}
 };
