@@ -54,25 +54,25 @@ TEST_CASE("Map::Update", "[Map]")
 {
 	Map<10, 10> map;
 
-	map[1][1] = &Text::baba;
-	map[1][2] = &Text::is;
-	map[1][3] = &Text::you;
+	map[1][1].push_back(&Text::baba);
+	map[1][2].push_back(&Text::is);
+	map[1][3].push_back(&Text::you);
 
 	REQUIRE(!Entity::baba.containProperty(Property::YOU));
 	REQUIRE(map.update());
 	REQUIRE(Entity::baba.containProperty(Property::YOU));
 
-	map[2][1] = &Text::baba;
-	map[2][2] = &Text::is;
-	map[2][3] = &Text::win;
+	map[2][1].push_back(&Text::baba);
+	map[2][2].push_back(&Text::is);
+	map[2][3].push_back(&Text::win);
 
 	REQUIRE(map.update());
 	REQUIRE(Entity::baba.containProperty(Property::YOU));
 	REQUIRE(Entity::baba.containProperty(Property::WIN));
 
-	map[3][1] = &Text::flag;
-	map[3][2] = &Text::is;
-	map[3][3] = &Text::baba;
+	map[3][1].push_back(&Text::flag);
+	map[3][2].push_back(&Text::is);
+	map[3][3].push_back(&Text::baba);
 
 	REQUIRE(map.update());
 	REQUIRE(Entity::flag.containProperty(Property::YOU));
@@ -80,23 +80,23 @@ TEST_CASE("Map::Update", "[Map]")
 
 	Map<10, 10> map2;
 
-	map[1][1] = &Text::baba;
-	map[1][2] = &Text::is;
-	map[1][3] = &Entity::flag;
+	map[1][1].push_back(&Text::baba);
+	map[1][2].push_back(&Text::is);
+	map[1][3].push_back(&Entity::flag);
 
 	REQUIRE(!map2.update());
 
-	map[2][1] = &Text::baba;
-	map[2][2] = &Text::flag;
-	map[2][3] = &Text::win;
+	map[2][1].push_back(&Text::baba);
+	map[2][2].push_back(&Text::flag);
+	map[2][3].push_back(&Text::win);
 
 	REQUIRE(map2.update());
 	REQUIRE(!Entity::baba.containProperty(Property::WIN));
 
-	map[3][1] = &Text::baba;
-	map[3][2] = &Text::is;
-	map[3][3] = &Text::win;
-	map[3][4] = &Text::you;
+	map[3][1].push_back(&Text::baba);
+	map[3][2].push_back(&Text::is);
+	map[3][3].push_back(&Text::win);
+	map[3][4].push_back(&Text::you);
 
 	REQUIRE(map2.update());
 	REQUIRE(Entity::baba.containProperty(Property::WIN));

@@ -50,7 +50,7 @@ public:
 		{
 			for (int x = 0; x < Width; ++x )
 			{
-				if ( map[y][x] != nullptr )
+				if ( map[y][x].empty() )
 				{
 					tmp_x = x;
 					tmp_y = y;
@@ -90,18 +90,24 @@ private:
 
 	int updateInternalHorizonal(int count, int& x, int y)
 	{
-		if ( x < Width && map[y][x] != nullptr && map[y][x]->getBlockType() == BlockType::TEXT )
+		for ( Block* block : map[y][x] )
 		{
-			count = updateInternalHorizonal(++count, ++x, y);
+			if ( x < Width && !map[y][x].empty() && block->getBlockType() == BlockType::TEXT )
+			{
+				count = updateInternalHorizonal(++count, ++x, y);
+				break;
+			}
 		}
 		return count;
 	}
 
 	int updateInternalVertical(int count, int x, int& y)
 	{
-		if ( y < Height && map[y][x] != nullptr && map[y][x]->getBlockType() == BlockType::TEXT )
-		{
-			count = updateInternalVertical(++count, x, ++y);
+		for ( Block* block : map[y][x] ){
+			if ( y < Height && !map[y][x].empty() && map[y][x]->getBlockType() == BlockType::TEXT )
+			{
+				count = updateInternalVertical(++count, x, ++y);
+			}
 		}
 		return count;
 	}
