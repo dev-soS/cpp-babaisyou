@@ -40,7 +40,7 @@ TEST_CASE("MapWrapper::movable", "[MapWrapper]")
     // empty map validation
     MapWrapper<3, 4> empty_wrapper;
     REQUIRE(fail(empty_wrapper.movable(std::make_tuple(0, 0, 0), MoveType::LEFT)));
-
+	
     // preparing test
     Map<3, 4> map;
     MapWrapper wrapper(&map);

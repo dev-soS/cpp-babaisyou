@@ -6,6 +6,7 @@
 #include <set>
 #include <vector>
 #include <tuple>
+#include <string>
 
 class Block
 {
