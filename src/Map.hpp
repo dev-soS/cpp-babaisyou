@@ -48,9 +48,9 @@ public:
 		int count = 0;
 		int tmp_x, tmp_y;
 		bool change_property = false;
-		for (int y = 0; y < Height; ++y )
+		for ( int y = 0; y < Height; ++y )
 		{
-			for (int x = 0; x < Width; ++x )
+			for ( int x = 0; x < Width; ++x )
 			{
 				if ( !map[y][x].empty() )
 				{

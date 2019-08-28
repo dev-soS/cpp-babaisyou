@@ -42,10 +42,9 @@ void Stage::printBlock(const std::vector<Block*>& blocks, int x, int y)
 	}
 }
 
-
 void Stage::printMapOverall()
 {
-	for (int i = 0; i < 10; ++i )
+	for ( int i = 0; i < 10; ++i )
 	{
 		for ( int j = 0; j < 20; ++j )
 		{
