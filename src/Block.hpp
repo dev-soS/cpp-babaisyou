@@ -17,7 +17,7 @@ protected:
 	std::string block_visual[3];
 
 public:
-	Block(BlockId block_id, BlockType block_type, std::set<Property> property, std::string block_visual);
+	Block(BlockId block_id, BlockType block_type, std::set<Property> property, const std::string& block_visual);
 	virtual ~Block(){}
 
 	void addProperty(Property property);
@@ -43,7 +43,7 @@ private:
 	std::vector<Position> position;
 
 public:
-	Entity(BlockId block_id, std::set<Property> property, std::string block_visual);
+	Entity(BlockId block_id, std::set<Property> property, const std::string& block_visual);
 	~Entity(){}
 
 	const std::vector<Position>& getPosition() const;
@@ -62,7 +62,7 @@ private:
 	Property repr;
 
 public:
-	Text(BlockId block_id, Property repr, std::set<Property> property, std::string block_visual, Entity* this_entity = nullptr);
+	Text(BlockId block_id, Property repr, std::set<Property> property, const std::string& block_visual, Entity* this_entity = nullptr);
 	~Text(){}
 
 	Entity* getThisEntity() const;
