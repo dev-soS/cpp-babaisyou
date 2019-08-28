@@ -59,7 +59,10 @@ public:
 					count = updateInternalHorizonal(0, x, y);
 					if ( count >= 3 )
 					{
-						if ( wrapper.updateBlocks(std::make_tuple(tmp_x, tmp_y), MoveType::RIGHT, count) ) change_property = true;
+						if ( wrapper.updateBlocks(std::make_tuple(tmp_x, tmp_y), MoveType::RIGHT, count) )
+						{
+							change_property = true;
+						}
 					}
 				}
 			}
@@ -76,7 +79,10 @@ public:
 					count = updateInternalVertical(0, x, y);
 					if ( count >= 3 )
 					{
-						if ( wrapper.updateBlocks(std::make_tuple(tmp_x, tmp_y), MoveType::DOWN, count) ) change_property = true;
+						if ( wrapper.updateBlocks(std::make_tuple(tmp_x, tmp_y), MoveType::DOWN, count) )
+						{
+							change_property = true;
+						}
 					}
 				}
 			}
