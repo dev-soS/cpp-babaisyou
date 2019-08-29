@@ -4,7 +4,9 @@
 #include "Enums.hpp"
 
 #include <set>
+#include <vector>
 #include <tuple>
+#include <string>
 
 class Block
 {
@@ -12,10 +14,10 @@ protected:
 	std::set<Property> properties;
 	BlockId block_id;
 	BlockType block_type;
-	char block_visual[3][3];
+	std::string block_visual[3];
 
 public:
-	Block(BlockId block_id, BlockType block_type, std::set<Property> property, const char* block_visual);
+	Block(BlockId block_id, BlockType block_type, std::set<Property> property, const std::string& block_visual);
 	virtual ~Block(){}
 
 	void addProperty(Property property);
@@ -27,6 +29,7 @@ public:
 	const std::set<Property>& getProperties() const;
 	bool containProperty(Property property) const;
 
+	const std::string* getBlockVisual() const;
 	BlockId getBlockId() const;
 	BlockType getBlockType() const;
 };
@@ -40,7 +43,7 @@ private:
 	std::vector<Position> position;
 
 public:
-	Entity(BlockId block_id, std::set<Property> property, const char* block_visual);
+	Entity(BlockId block_id, std::set<Property> property, const std::string& block_visual);
 	~Entity(){}
 
 	const std::vector<Position>& getPosition() const;
@@ -59,7 +62,7 @@ private:
 	Property repr;
 
 public:
-	Text(BlockId block_id, Property repr, std::set<Property> property, const char* block_visual, Entity* this_entity = nullptr);
+	Text(BlockId block_id, Property repr, std::set<Property> property, const std::string& block_visual, Entity* this_entity = nullptr);
 	~Text(){}
 
 	Entity* getThisEntity() const;

@@ -37,4 +37,10 @@ enum class BlockType
 	ENTITY,
 };
 
+enum class StageName
+{
+	BASE_STAGE,
+	STAGE1_1,
+	STAGE1_2,
+};
 #endif

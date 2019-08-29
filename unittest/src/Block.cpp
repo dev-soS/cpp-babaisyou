@@ -19,7 +19,7 @@ TEST_CASE("Block::containProperty", "[Block]")
 TEST_CASE("Block::getProperties", "[Block]")
 {
 	Block block(BlockId::BABA, BlockType::ENTITY, { Property::PUSH, Property::YOU }, "         ");
-	REQUIRE(block.getProperties() == std::set({ Property::PUSH, Property::YOU }));
+	REQUIRE(block.getProperties() == std::set<Property>({ Property::PUSH, Property::YOU }));
 }
 
 TEST_CASE("Block::addProperty", "[Block]")

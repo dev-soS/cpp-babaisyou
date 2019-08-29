@@ -7,7 +7,9 @@
 
 #include "Block.hpp"
 #include "Enums.hpp"
-#include "Map.hpp"
+
+template <size_t Width, size_t Height>
+class Map;
 
 template <size_t Width, size_t Height>
 class MapWrapper {
@@ -92,7 +94,8 @@ public:
         // if entity is movable
         auto[x, y, z] = pos;
         auto[possible, new_x, new_y] = movable(pos, direction);
-        if (possible)
+
+		if (possible)
         {
             // push validation
             int new_z = 0;
@@ -115,6 +118,7 @@ public:
             Block* block = map_ref[y][x][z];
             map_ref[new_y][new_x].push_back(block);
             map_ref[y][x].erase(map_ref[y][x].begin() + z);
+
 
             if (block->getBlockType() == BlockType::ENTITY) {
                 // modify position
@@ -201,6 +205,11 @@ public:
 
             Block* dst = text_finder(map_ref[prev_y][prev_x]);
             Block* src = text_finder(map_ref[next_y][next_x]);
+
+			if ( dst == nullptr || src == nullptr )
+			{
+				return false;
+			}
 
             // if adjacent block is text type
             if (src != nullptr && dst != nullptr)
